@@ -1,0 +1,29 @@
+{
+  "name": "event-manager-web",
+  "version": "1.0.0",
+  "description": "The Web portion of the Event Manager for the SEG4910 Capstone Project.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexandreStelzig/Event-Manager-Web.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlexandreStelzig/Event-Manager-Web/issues"
+  },
+  "homepage": "https://github.com/AlexandreStelzig/Event-Manager-Web#readme",
+  "dependencies": {
+    "concurrently": "^3.5.1",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.11"
+  }
+}
