@@ -1,46 +1,56 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Router, Route } from 'react-router-dom';
 import './App.css';
 import WorkshopMenu from './components/WorkshopMenu';
+import PrivateRoute from './components/PrivateRoute';
 import RegistrationsPage from './containers/RegistrationsPage';
 import CalendarPage from './containers/CalendarPage';
 import SettingsPage from './containers/SettingsPage';
 import UsersPage from './containers/UsersPage';
 import ResourcesPage from './containers/ResourcesPage';
 import WorkshopsPage from './containers/WorkshopsPage';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import LoginPage from './containers/LoginPage';
+import AuthService from './services/AuthService';
+import History from './utils/History';
+
 
 export default class App extends Component {
-
   constructor() {
     super();
-    this.state ={
-      name: ""
-    };
+    const isLoggedIn = AuthService.getIsLoggedIn();
+    this.state = { isLoggedIn };
+    this.onLogout = this.onLogout.bind(this);
+    this.onLogin = this.onLogin.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/name')
-      .then(res => res.json())
-      .then(name => this.setState({name}));
+  onLogout() {
+    AuthService.setIsLoggedIn(false);
+    this.setState({ isLoggedIn: false });
+  }
+
+  onLogin() {
+    AuthService.setIsLoggedIn(true);
+    History.push('/');
+    this.setState({ isLoggedIn: true });
   }
 
   render() {
     return (
-      <BrowserRouter>
+      <Router history={History}>
         <React.Fragment>
-          <WorkshopMenu/>
+          {this.state.isLoggedIn && <WorkshopMenu onLogout={this.onLogout} />}
           <div className="content">
-            <Route exact path="/" component={RegistrationsPage} />
-            <Route exact path="/registrations" component={RegistrationsPage} />
-            <Route exact path="/calendar" component={CalendarPage} />        
-            <Route exact path="/resources" component={ResourcesPage} />
-            <Route exact path="/workshops" component={WorkshopsPage} />
-            <Route exact path="/users" component={UsersPage} />
-            <Route exact path="/settings" component={SettingsPage} />          
-          </div>                    
+            <PrivateRoute exact path="/" component={RegistrationsPage} />
+            <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
+            <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
+            <PrivateRoute exact path="/calendar" component={CalendarPage} />
+            <PrivateRoute exact path="/resources" component={ResourcesPage} />
+            <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
+            <PrivateRoute exact path="/users" component={UsersPage} />
+            <PrivateRoute exact path="/settings" component={SettingsPage} />
+          </div>
         </React.Fragment>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
