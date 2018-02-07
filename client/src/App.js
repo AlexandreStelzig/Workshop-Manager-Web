@@ -31,6 +31,7 @@ export default class App extends Component {
         <React.Fragment>
           <WorkshopMenu/>
           <div className="content">
+            <Route exact path="/" component={RegistrationsPage} />
             <Route exact path="/registrations" component={RegistrationsPage} />
             <Route exact path="/calendar" component={CalendarPage} />        
             <Route exact path="/resources" component={ResourcesPage} />
