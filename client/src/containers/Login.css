@@ -1,0 +1,9 @@
+.LoginContainer {
+	padding-top: 100px;
+	width: 50%;
+  	margin: 0 auto;
+}
+
+.LoginContainer h1 {
+	text-align: center;
+}
