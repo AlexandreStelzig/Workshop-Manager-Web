@@ -2,11 +2,11 @@
 
 ## Features
 
-Each feature needs its own issue. Issues will be related to a branch, in some cases, multiple issues will be related to one 
+Each feature needs its own issue. Issues will be related to a branch, in some cases, multiple issues will be related to one branch.
 
 ## Pull requests
 
-Branches need to be named Issue## \<issue title\> 
+Branches need to be named Issue##_\<issue title\> 
 
 ## Style Guide
 
