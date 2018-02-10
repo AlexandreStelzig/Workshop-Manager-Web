@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './Login.css';
 
 export default class LoginPage extends Component {
-
   click() {
     const username = this.textbox.value;
     const password = this.textbox.value;
