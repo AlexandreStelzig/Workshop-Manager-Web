@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import PaginationFactory from 'react-bootstrap-table2-paginator';
 
 const columns = [
   {
@@ -130,7 +130,7 @@ export default class RegistrationsPage extends Component {
           </div>
         </div>
         <BootstrapTable
-          keyField='id' 
+          keyField='id'
           data={registrations}
           columns={columns}
           striped
@@ -138,7 +138,7 @@ export default class RegistrationsPage extends Component {
           condensed
           noDataIndication={indication()}
           selectRow={selectRow}
-          pagination={paginationFactory(pagination)}
+          pagination={PaginationFactory(pagination)}
         />
       </React.Fragment>
     );
