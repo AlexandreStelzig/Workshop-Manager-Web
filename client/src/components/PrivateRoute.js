@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 import AuthService from '../services/AuthService';
 
-const privateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = AuthService.getIsLoggedIn();
 
   return (
@@ -18,8 +18,8 @@ const privateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-privateRoute.propTypes = {
+PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
 };
 
-export default privateRoute;
+export default PrivateRoute;
