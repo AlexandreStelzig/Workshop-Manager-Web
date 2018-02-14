@@ -55,26 +55,39 @@ const testResources = [
   }
 ];
 
-var filteredTestResources = testResources;
-
 var filter = '';
+
+//var filteredTestResources = testResources;
 
 const pagination = {
   paginationSize: 1,
   hideSizePerPage: true
 };
 
-function filterResources(event) {
-  filter = event.target.value;
-  filteredTestResources = [];
-  for(var i = 0; i < testResources.length; i++) {
-    if(testResources[i].name.includes(filter) || testResources[i].category.includes(filter)) {
-      filteredTestResources.push(testResources[i]);
-    }
-  }
-};
-
 export default class ResourcesPage extends Component {
+  filteredTestResources = testResources;
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      filteredTestResources: testResources
+    };
+    this.filterResources = this.filterResources.bind(this);
+  }  
+
+  filterResources(event) {
+    filter = event.target.value;
+    this.filteredTestResources = [];
+    for(var i = 0; i < testResources.length; i++) {
+      var name = testResources[i].name.toLowerCase();
+      var category = testResources[i].category.toLowerCase();
+      if(name.includes(filter.toLowerCase()) || category.includes(filter.toLowerCase())) {
+        this.filteredTestResources.push(testResources[i]);
+      }
+    }
+    this.setState({filteredTestResources: this.filteredTestResources});
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -82,12 +95,12 @@ export default class ResourcesPage extends Component {
           <h1>Resources</h1>
         </div>
         <div className='col-md-3'>
-          <input className='form-control' type='text' placeholder='Search Resources...' id='resourceSearch' onChange={filterResources} />
+          <input className='form-control' type='text' placeholder='Filter Resources...' id='resourceSearch' onChange={this.filterResources} />
         </div>
         <div>
           <BootstrapTable
             keyField='id'
-            data={filteredTestResources}
+            data={this.filteredTestResources}
             columns={columns}
             striped
             pagination={PaginationFactory(pagination)}
