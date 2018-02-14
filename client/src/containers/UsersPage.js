@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
 import {ButtonToolbar, Button} from 'react-bootstrap';
 
 function buttonToolbarFormatter(cell, row) {
   return (
     <ButtonToolbar>
-      <Button bsStyle='success'>Edit</Button>
-      <Button bsStyle='danger'>Remove</Button>
+      <Button bsStyle="success">Edit</Button>
+      <Button bsStyle="danger">Remove</Button>
     </ButtonToolbar>
   );
 }
 
 const columns = [
   {
-    dataField: 'user',
+    dataField: 'userName',
     text: 'User Name',
     sort: true,
   }, {
@@ -31,8 +30,9 @@ const columns = [
     sort: true,
   }, {
     dataField: 'button',
-    text: 'BUTTONS',
+    text: '',
     formatter: buttonToolbarFormatter,
+    sort: false,
   }, {
     dataField: 'id',
     text: 'ID',
@@ -43,25 +43,69 @@ const columns = [
 
 const users = [
   {
-    id: 0, user: 'user0', type: 'Instructor', fullName: 'test0', status: 'Active', button: 'test',
+    id: 0, userName: 'user0', type: 'Instructor', fullName: 'test0', status: 'Active',
   }, {
-    id: 1, user: 'user1', type: 'Instructor', fullName: 'test1', status: 'Active',
+    id: 1, userName: 'user1', type: 'Instructor', fullName: 'test1', status: 'Active',
   }, {
-    id: 2, user: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
+    id: 2, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
   }, {
-    id: 3, user: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 3, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
   }, {
-    id: 4, user: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 4, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
   }, {
-    id: 5, user: 'user4', type: 'Admin', fullName: 'test4', status: 'Active',
+    id: 5, userName: 'user4', type: 'Admin', fullName: 'test4', status: 'Active',
   }];
 
 function indication() {
   return 'No Data';
 }
 
+var filter = '';
+var showInactive = false;
 
 export default class UsersPage extends Component {
+  filteredUsers = users;
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      filteredUsers: users
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.filterUsers = this.filterUsers.bind(this);
+    this.filterUsers()
+  }  
+
+  handleInputChange(event) {
+    const target = event.target;
+    if(target.type == 'checkbox'){
+      showInactive = target.checked
+    }
+
+    if(target.type == 'text'){
+       filter = event.target.value;
+     }
+
+    this.filterUsers()
+  }
+
+  filterUsers() {
+    this.filteredUsers = [];
+    for(var i = 0; i < users.length; i++) {
+      var userName = users[i].userName.toLowerCase();
+      var fullName = users[i].fullName.toLowerCase();
+      var status = users[i].status.toLowerCase();
+      if(userName.includes(filter.toLowerCase()) || fullName.includes(filter.toLowerCase())) {
+        if(showInactive || status == 'active')
+        this.filteredUsers.push(users[i]);
+      }
+    }
+    this.setState({filteredUsers: this.filteredUsers});
+  }
+
+
+
+
   render() {
     return (
       <React.Fragment>
@@ -71,20 +115,19 @@ export default class UsersPage extends Component {
         <br />
         <div className="row">
           <div className="col-md-4">
-            <input className="form-control" type="text" placeholder="Filter users..." />
+            <input className='form-control' type='text' placeholder='Filter Users...' id='userSearch' onChange={this.handleInputChange} />
           </div>
           <div className="col-md-4" />
           <div className="col-md-4">
-            <label><input type="checkbox" name="checkbox" value="value" /> Show disabled users</label>
+            <label><input type="checkbox" defaultChecked={showInactive} id="userShowInactiveCheckbox" onChange={this.handleInputChange} /> Show inactive users</label>
           </div>
         </div>
         <br />
         <BootstrapTable
           keyField="id"
-          data={users}
+          data={this.filteredUsers}
           columns={columns}
           striped
-          cellEdit={cellEditFactory({ mode: 'click' })}
           hover
           condensed
           noDataIndication={indication()}
