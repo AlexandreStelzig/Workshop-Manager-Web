@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import PaginationFactory from 'react-bootstrap-table2-paginator';
+import { Redirect } from 'react-router';
 
 const columns = [
   {
@@ -58,14 +59,6 @@ const registrations = [
     id: 11, status: 1, dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
   }];
 
-const selectRow = {
-  mode: 'checkbox',
-  clickToSelect: true,
-  hideSelectColumn: true,
-  onSelect: (row) => {
-    alert(`Opening registration : ${registrations[row.id].name}`); //debug test
-  },
-};
 
 const progBar = {
   width: '25%',
@@ -79,8 +72,27 @@ const pagination = {
   hideSizePerPage: true, // Hide the sizePerPage dropdown always
 };
 
+
 export default class RegistrationsPage extends Component {
+  constructor() {
+    super();
+    this.state = { redirect: false };
+  }
+
   render() {
+    const selectRow = {
+      mode: 'checkbox',
+      clickToSelect: true,
+      hideSelectColumn: true,
+      onSelect: (row) => {
+        //alert(`Opening registration : ${registrations[row.id].name}`); //debug test
+        this.setState({ redirect: true });
+      },
+    };
+
+    if (this.state.redirect) {
+      return < Redirect push to="/registrationDetail" />;
+    }
     return (
       <React.Fragment>
         <div>
@@ -142,5 +154,6 @@ export default class RegistrationsPage extends Component {
         />
       </React.Fragment>
     );
+    
   }
 }

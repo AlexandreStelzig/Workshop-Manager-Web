@@ -4,6 +4,7 @@ import './App.css';
 import WorkshopMenu from './components/WorkshopMenu';
 import PrivateRoute from './components/PrivateRoute';
 import RegistrationsPage from './containers/RegistrationsPage';
+import RegistrationDetailPage from './containers/RegistrationDetailPage';
 import CalendarPage from './containers/CalendarPage';
 import SettingsPage from './containers/SettingsPage';
 import UsersPage from './containers/UsersPage';
@@ -43,6 +44,7 @@ export default class App extends Component {
             <PrivateRoute exact path="/" component={RegistrationsPage} />
             <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
             <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
+            <PrivateRoute exact path="/registrationDetail" component={RegistrationDetailPage} />
             <PrivateRoute exact path="/calendar" component={CalendarPage} />
             <PrivateRoute exact path="/resources" component={ResourcesPage} />
             <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
