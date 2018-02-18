@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import { ButtonToolbar, Button } from 'react-bootstrap';
-import PaginationFactory from 'react-bootstrap-table2-paginator';
 
 
 function buttonToolbarFormatter(cell, row) {
   return (
     <ButtonToolbar>
       <Button bsStyle="success">Edit</Button>
-      <Button bsStyle="danger">Remove</Button>
+      <Button bsStyle="danger">Toggle status</Button>
     </ButtonToolbar>
   );
 }
@@ -26,6 +25,14 @@ const columns = [
   }, {
     dataField: 'fullName',
     text: 'Full Name',
+    sort: true,
+  }, {
+    dataField: 'language',
+    text: 'Language',
+    sort: true,
+  }, {
+    dataField: 'liscence',
+    text: 'Driver Liscence',
     sort: true,
   }, {
     dataField: 'status',
@@ -46,29 +53,29 @@ const columns = [
 
 const users = [
   {
-    id: 0, userName: 'user0', type: 'Instructor', fullName: 'test0', status: 'Active',
+    id: 0, userName: 'user0', type: 'Instructor', fullName: 'test0', status: 'Active', language: 'French', liscence: 'yes',
   }, {
-    id: 1, userName: 'user1', type: 'Instructor', fullName: 'test1', status: 'Active',
+    id: 1, userName: 'user1', type: 'Instructor', fullName: 'test1', status: 'Active', language: 'English', liscence: 'yes',
   }, {
-    id: 2, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
+    id: 2, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active', language: 'English', liscence: 'no',
   }, {
-    id: 3, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 3, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive', language: 'English', liscence: 'yes',
   }, {
-    id: 4, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
+    id: 4, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active', language: 'English', liscence: 'no',
   }, {
-    id: 5, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 5, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive', language: 'English', liscence: 'yes',
   }, {
-    id: 6, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
+    id: 6, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active', language: 'Bilingual', liscence: 'no',
   }, {
-    id: 7, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 7, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive', language: 'Bilingual', liscence: 'yes',
   }, {
-    id: 8, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active',
+    id: 8, userName: 'user2', type: 'Instructor', fullName: 'test2', status: 'Active', language: 'French', liscence: 'yes',
   }, {
-    id: 9, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 9, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive', language: 'Bilingual', liscence: 'no',
   }, {
-    id: 10, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive',
+    id: 10, userName: 'user3', type: 'Instructor', fullName: 'test3', status: 'Inactive', language: 'French', liscence: 'no',
   }, {
-    id: 11, userName: 'user4', type: 'Admin', fullName: 'test4', status: 'Active',
+    id: 11, userName: 'user4', type: 'Admin', fullName: 'test4', status: 'Active', language: 'French', liscence: 'no',
   }];
 
 function indication() {
