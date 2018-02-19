@@ -149,9 +149,13 @@ export default class ResourcesPage extends Component {
         <div>
           <h1>Resources</h1>
         </div>
-        <div className='col-md-3'>
-          <input className='form-control' type='text' placeholder='Filter Resources...' 
-          id='resourceSearch' onChange={this.filterResources} />
+        <div className='row'>
+          <div className='col-md-4'>
+            <input className='form-control' type='text' placeholder='Filter Resources...' 
+            id='resourceSearch' onChange={this.filterResources} />
+          </div>
+          <div className='col-md-4'/>
+          <div className='col-md-4'/>
         </div>
         <div>
           <BootstrapTable
