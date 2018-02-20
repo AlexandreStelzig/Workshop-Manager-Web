@@ -8,14 +8,18 @@
     "popper.js": "^1.12.9",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^0.1.2",
     "react-bootstrap-table2-editor": "^0.1.1",
     "react-bootstrap-table2-filter": "^0.1.2",
     "react-bootstrap-table2-overlay": "^0.1.1",
     "react-bootstrap-table2-paginator": "^0.1.1",
     "react-dom": "^16.2.0",
+    "react-modal": "^3.2.1",
+    "react-modal-dialog": "^4.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.0"
+    "react-scripts": "1.1.0",
+    "react-toolbox": "^2.0.0-beta.12"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -27,6 +31,7 @@
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-google": "^0.9.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0"
