@@ -24,6 +24,14 @@ export default class WeekView extends Component {
     return (
       <div>
         <CalendarGrid rows={resources} cols={days} />
+        <div className="row">
+          <div className="col-md-4">
+            <button type="button" className="btn btn-secondary">&lt; Previous Week</button>
+          </div>
+          <div className="offset-md-4 col-md-4">
+            <button type="button" className="btn btn-secondary float-right">Next Week &gt;</button>
+          </div>
+        </div>
       </div>
     );
   }

@@ -50,6 +50,7 @@ export default class CalendarPage extends Component {
               {this.renderGroupButton()}
             </div>
           </div>
+          <br />
           {this.state.viewMode === 'Week' && <WeekView />}
         </div>
       </React.Fragment>
