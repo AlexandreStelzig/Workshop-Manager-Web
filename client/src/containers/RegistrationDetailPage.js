@@ -107,6 +107,7 @@ export default class RegistrationDetailPage extends Component {
           <h1>Registration Detail</h1>
         </div>
         <h3>School Informations </h3>
+        <button type="button" className="btn btn-primary" style={{float:'right'}}>Invoice</button>
         <section>
           <div className="row">
             <div className="col-md-1">
@@ -238,6 +239,7 @@ export default class RegistrationDetailPage extends Component {
             </div>
             <div className="col-md-3">
               <select className="selectpicker form-control">
+                <option>Not selected</option>
                 <option>Van 1</option>
                 <option>Van 2</option>
                 <option>Van 3</option>
@@ -319,7 +321,7 @@ export default class RegistrationDetailPage extends Component {
           noDataIndication={indication()}
         />
         <button type="button" className="btn btn-primary">+ Add another day</button>
-        <br/>
+        <br />
       </React.Fragment>
     );
   }
