@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import WeekView from '../components/calendar/WeekView';
+import DayView from '../components/calendar/DayView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
 
 export default class CalendarPage extends Component {
@@ -52,6 +53,7 @@ export default class CalendarPage extends Component {
           </div>
           <br />
           {this.state.viewMode === 'Week' && <WeekView />}
+          {this.state.viewMode === 'Day' && <DayView />}
         </div>
       </React.Fragment>
     );
