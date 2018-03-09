@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
+// import BootstrapTable from 'react-bootstrap-table-next';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import Modal from 'react-modal';
 
@@ -204,7 +204,7 @@ export default class UsersPage extends Component {
           </div>
         </div>
         <br />
-        <BootstrapTable
+        {/*<BootstrapTable
           keyField="id"
           data={this.filteredUsers}
           columns={columns}
@@ -212,7 +212,7 @@ export default class UsersPage extends Component {
           hover
           condensed
           noDataIndication={indication()}
-        />
+        />*/}
         <Modal
               isOpen={this.state.showingModal}
               onRequestClose={this.closeModal}
