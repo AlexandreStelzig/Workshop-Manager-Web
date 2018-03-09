@@ -1,6 +1,6 @@
 import React, { Component, PropTypes} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import PaginationFactory from 'react-bootstrap-table2-paginator';
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import PaginationFactory from 'react-bootstrap-table2-paginator';
 import {ButtonToolbar, Button} from 'react-bootstrap';
 import Modal from 'react-modal';
 
@@ -158,13 +158,13 @@ export default class ResourcesPage extends Component {
           <div className='col-md-4'/>
         </div>
         <div>
-          <BootstrapTable
+          {/*<BootstrapTable
             keyField='id'
             data={this.filteredTestResources}
             columns={columns}
             striped
             pagination={PaginationFactory(pagination)}
-          />
+          />*/}
           <Modal
               isOpen={this.state.showingModal}
               onRequestClose={this.closeModal}

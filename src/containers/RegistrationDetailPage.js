@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import PaginationFactory from 'react-bootstrap-table2-paginator';
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import PaginationFactory from 'react-bootstrap-table2-paginator';
 
 const columns = [
   {
@@ -250,7 +250,7 @@ export default class RegistrationDetailPage extends Component {
             </div>
           </div>
         </section>
-        <BootstrapTable
+        {/*<BootstrapTable
           keyField="id"
           data={workshopsDetail}
           columns={columns}
@@ -258,7 +258,7 @@ export default class RegistrationDetailPage extends Component {
           hover
           condensed
           noDataIndication={indication()}
-        />
+        />*/}
 
         <br />
         <section>
@@ -311,7 +311,7 @@ export default class RegistrationDetailPage extends Component {
             </div>
           </div>
         </section>
-        <BootstrapTable
+        {/*<BootstrapTable
           keyField="id"
           data={workshopsDetail}
           columns={columns}
@@ -319,7 +319,7 @@ export default class RegistrationDetailPage extends Component {
           hover
           condensed
           noDataIndication={indication()}
-        />
+        />*/}
         <button type="button" className="btn btn-primary">+ Add another day</button>
         <br />
       </React.Fragment>

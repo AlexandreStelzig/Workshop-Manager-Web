@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import PaginationFactory from 'react-bootstrap-table2-paginator';
+// import BootstrapTable from 'react-bootstrap-table-next';
+// import PaginationFactory from 'react-bootstrap-table2-paginator';
 import { Redirect } from 'react-router-dom';
 
 const columns = [
@@ -91,7 +91,7 @@ export default class RegistrationsPage extends Component {
     };
 
     if (this.state.redirect) {
-      return < Redirect push to="/registrationDetail" />;
+      return <Redirect push to="/registrationDetail" />;
     }
     return (
       <React.Fragment>
@@ -141,7 +141,7 @@ export default class RegistrationsPage extends Component {
             </select>
           </div>
         </div>
-        <BootstrapTable
+        {/*<BootstrapTable
           keyField='id'
           data={registrations}
           columns={columns}
@@ -151,7 +151,7 @@ export default class RegistrationsPage extends Component {
           noDataIndication={indication()}
           selectRow={selectRow}
           pagination={PaginationFactory(pagination)}
-        />
+        />*/}
       </React.Fragment>
     );
     
