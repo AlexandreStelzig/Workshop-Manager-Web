@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import PaginationFactory from 'react-bootstrap-table2-paginator';
-import { Redirect } from 'react-router';
+import { Redirect } from 'react-router-dom';
 
 const columns = [
   {
