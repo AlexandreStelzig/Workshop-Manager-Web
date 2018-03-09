@@ -25,7 +25,10 @@
   },
   "homepage": "https://github.com/AlexandreStelzig/Event-Manager-Web#readme",
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "history": "^4.7.2",
     "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0"
   },
   "devDependencies": {
@@ -34,13 +37,17 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.10",
     "eslint": "^4.18.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "file-loader": "^1.1.11",
     "open-browser-webpack-plugin": "0.0.5",
+    "style-loader": "^0.20.2",
+    "url-loader": "^1.0.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0"
