@@ -25,7 +25,7 @@ function buttonToolbarFormatter(cell, row){
   );
 }
 
-function quantityValidator(value, row) {
+function quantityValidator(value) {
   const nan = Number.isNaN(parseInt(value, 10));
   if (nan) {
     return 'Quantity must be a number.';
