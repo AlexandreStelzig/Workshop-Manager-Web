@@ -1,5 +1,7 @@
+/* eslint react/prefer-stateless-function: 0 */ // temp disable since it will have state later on
 import React, { Component } from 'react';
 import CalendarGrid from './CalendarGrid';
+
 
 export default class DayView extends Component {
   render() {
@@ -33,8 +35,8 @@ export default class DayView extends Component {
           <div className="col-md-4">
             <button type="button" className="btn btn-secondary">&lt; Previous Day</button>
           </div>
-          <div className="offset-md-4 col-md-4">
-            <button type="button" className="btn btn-secondary float-right">Next Day &gt;</button>
+          <div className="col-md-4 col-md-offset-4">
+            <button type="button" className="btn btn-secondary pull-right">Next Day &gt;</button>
           </div>
         </div>
       </div>
