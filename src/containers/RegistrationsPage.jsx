@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-import { ButtonToolbar, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+
 const registrations = [
   {
     id: 0, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com',
@@ -10,7 +11,7 @@ const registrations = [
   }, {
     id: 2, status: 'sent', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com',
   }, {
-    id: 3, status: 'nconfirmedew', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com',
+    id: 3, status: 'confirmed', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com',
   }, {
     id: 4, status: 'confirmed', dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com',
   }, {
@@ -29,38 +30,38 @@ const registrations = [
     id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
   }];
 
+const statuses = {
+};
+
 const progBar = {
   width: '25%',
 };
-
 
 export default class RegistrationsPage extends Component {
   constructor() {
     super();
     this.state = { redirect: false };
+    this.onSelectChange = this.onSelectChange.bind(this);
   }
 
+  onSelectChange() {
+    this.statusRef.applyFilter(this.inputStatus.value);
+  }
   changepage() {
     this.setState({ redirect: true });
   }
-
-  onSelectChange(e){
-    console.log('[new status selected]', this.inputStatus.value );
-  }
-
   render() {
     const selectRow = {
       mode: 'checkbox',
       clickToSelect: true,
       hideSelectColumn: true,
-      onSelect: (row) => {
-        //alert(`Opening registration : ${registrations[row.id].name}`); //debug test
+      onSelect: () => {
         this.setState({ redirect: true });
       },
     };
 
     if (this.state.redirect) {
-      return < Redirect push to="/registrationDetail" />;
+      return <Redirect push to="/registrationDetail" />;
     }
     return (
       <React.Fragment>
@@ -92,9 +93,8 @@ export default class RegistrationsPage extends Component {
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Filter by statuses</ControlLabel>
               <FormControl
-                ref='inputStatus'
-                onChange={this.onSelectChange.bind(this)}
-                inputRef={ inputStatus => this.inputStatus=inputStatus }
+                onChange={this.onSelectChange}
+                inputRef={(inputStatus) => { this.inputStatus = inputStatus; }}
                 componentClass="select"
                 placeholder="select"
               >
@@ -114,8 +114,6 @@ export default class RegistrationsPage extends Component {
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>By year</ControlLabel>
               <FormControl
-                // onChange={this.onSelectChange.bind(this)}
-                // inputRef={ el => this.inputEl=el }
                 componentClass="select"
                 placeholder="select"
               >
@@ -136,11 +134,11 @@ export default class RegistrationsPage extends Component {
             condensed
             pagination
             search
-            searchPlaceholder="Filter registrations..."           
+            searchPlaceholder="Filter registrations..."
             selectRow={selectRow}
           >
             <TableHeaderColumn dataField="id" isKey hidden searchable={false}>Id</TableHeaderColumn>
-            <TableHeaderColumn dataField="status" ref='status' dataSort >Status</TableHeaderColumn>
+            <TableHeaderColumn dataField="status" ref={(statusRef) => { this.statusRef = statusRef; }} filter={{ type: 'SelectFilter', options: statuses }} dataSort >Status</TableHeaderColumn>
             <TableHeaderColumn dataField="dateSubmitted" dataSort >Date Submitted</TableHeaderColumn>
             <TableHeaderColumn dataField="school" dataSort >School</TableHeaderColumn>
             <TableHeaderColumn dataField="name" dataSort >Client</TableHeaderColumn>
