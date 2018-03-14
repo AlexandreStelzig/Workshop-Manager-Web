@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
 import './App.css';
+import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import WorkshopMenu from './components/WorkshopMenu';
 import PrivateRoute from './components/PrivateRoute';
 import RegistrationsPage from './containers/RegistrationsPage';
-import RegistrationDetailPage from './containers/RegistrationDetailPage';
+import RegistrationDetailPage from './containers/RegistrationDetailPage.jsx';
 import CalendarPage from './containers/CalendarPage';
 import SettingsPage from './containers/SettingsPage';
 import UsersPage from './containers/UsersPage';
