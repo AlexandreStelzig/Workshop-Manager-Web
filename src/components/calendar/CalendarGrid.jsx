@@ -1,3 +1,4 @@
+/* eslint react/prefer-stateless-function: 0 */ // temp disable since it will have state later on
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,8 +11,10 @@ export default class CalendarGrid extends Component {
       <div>
         <table className="table table-striped table-bordered">
           <thead className="thead-light">
-            <th />
-            {headRows}
+            <tr>
+              <th />
+              {headRows}
+            </tr>
           </thead>
           <tbody>
             {rowsHTML}

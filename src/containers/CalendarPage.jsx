@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import WeekView from '../components/calendar/WeekView';
 import DayView from '../components/calendar/DayView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
@@ -12,23 +13,8 @@ export default class CalendarPage extends Component {
 
   handleViewModeChange(e) {
     this.setState({
-      viewMode: e.target.value,
+      viewMode: e,
     });
-  }
-
-  renderGroupButton() {
-    return (
-      <div className="btn-group btn-group-toggle float-right">
-        <label htmlFor="op1" className={`btn btn-secondary ${this.state.viewMode === 'Day' ? ' active' : ''}`} >
-          <input id="op1" type="radio" name="viewModeRadio" value="Day" onChange={this.handleViewModeChange} /> Day
-        </label>
-        <label htmlFor="op2" className={`btn btn-secondary ${this.state.viewMode === 'Week' ? ' active' : ''}`}>
-          <input id="op2" type="radio" name="viewModeRadio" value="Week" onChange={this.handleViewModeChange} /> Week
-        </label>
-        <label htmlFor="op3" className={`btn btn-secondary ${this.state.viewMode === 'Month' ? ' active' : ''}`}>
-          <input id="op3" type="radio" name="viewModeRadio" value="Month" onChange={this.handleViewModeChange} /> Month
-        </label>
-      </div>);
   }
 
   render() {
@@ -47,8 +33,12 @@ export default class CalendarPage extends Component {
               <input type="date" className="form-control" />
               <SimpleDropdown items={resources} />
             </div>
-            <div className="offset-md-4 col-md-4">
-              {this.renderGroupButton()}
+            <div className="col-md-4 col-md-offset-4">
+              <ToggleButtonGroup bsClass="pull-right btn-group" name="viewMode" type="radio" onChange={this.handleViewModeChange} value={this.state.viewMode}>
+                <ToggleButton value="Day">Day</ToggleButton>
+                <ToggleButton value="Week">Week</ToggleButton>
+                <ToggleButton value="Month">Month</ToggleButton>
+              </ToggleButtonGroup>
             </div>
           </div>
           <br />
