@@ -1,4 +1,12 @@
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+var OfflinePlugin = require('offline-plugin');
+
+const offline = new OfflinePlugin({
+  externals: ['index.html'],
+  ServiceWorker: {
+    minify: false
+  }
+});
 
 module.exports = {
   entry: [
@@ -37,6 +45,7 @@ module.exports = {
     historyApiFallback: true
   },
   plugins: [
-    new OpenBrowserPlugin({ url: 'http://localhost:8080' })
+    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+    offline
   ]
 };
