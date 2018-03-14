@@ -35,6 +35,9 @@ class WorkshopMenu extends Component {
             <NavLink to="/settings">
               Settings
             </NavLink>
+            <NavLink to="/test">
+              Test
+            </NavLink>
           </Nav>
           <Nav pullRight>
             <li>

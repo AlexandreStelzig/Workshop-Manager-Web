@@ -5,7 +5,7 @@ import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min
 import WorkshopMenu from './components/WorkshopMenu';
 import PrivateRoute from './components/PrivateRoute';
 import RegistrationsPage from './containers/RegistrationsPage';
-import RegistrationDetailPage from './containers/RegistrationDetailPage.jsx';
+import RegistrationDetailPage from './containers/RegistrationDetailPage';
 import CalendarPage from './containers/CalendarPage';
 import SettingsPage from './containers/SettingsPage';
 import UsersPage from './containers/UsersPage';
