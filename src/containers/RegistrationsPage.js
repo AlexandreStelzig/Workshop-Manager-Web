@@ -1,75 +1,36 @@
 import React, { Component } from 'react';
-// import BootstrapTable from 'react-bootstrap-table-next';
-// import PaginationFactory from 'react-bootstrap-table2-paginator';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-
-const columns = [
-  {
-    dataField: 'status',
-    text: 'Status',
-    sort: true,
-  }, {
-    dataField: 'dateSubmitted',
-    text: 'Date Submitted',
-    sort: true,
-  }, {
-    dataField: 'school',
-    text: 'School',
-    sort: true,
-  }, {
-    dataField: 'name',
-    text: 'Name',
-    sort: true,
-  }, {
-    dataField: 'email',
-    text: 'Email',
-    sort: true,
-  }, {
-    dataField: 'id',
-    text: 'ID',
-    sort: true,
-    hidden: true,
-  },
-];
-
+import { ButtonToolbar, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 const registrations = [
   {
-    id: 0, status: 0, dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com',
+    id: 0, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com',
   }, {
-    id: 1, status: 0, dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'simon123@gmail.com',
+    id: 1, status: 'sent', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'simon123@gmail.com',
   }, {
-    id: 2, status: 1, dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com',
+    id: 2, status: 'sent', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com',
   }, {
-    id: 3, status: 1, dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com',
+    id: 3, status: 'nconfirmedew', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com',
   }, {
-    id: 4, status: 2, dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com',
+    id: 4, status: 'confirmed', dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com',
   }, {
-    id: 5, status: 2, dateSubmitted: '07/01/2018', school: 'Petit-Ruisseau', name: 'Paul Boris', email: 'paulBoris@gmail.com',
+    id: 5, status: 'confirmed', dateSubmitted: '07/01/2018', school: 'Petit-Ruisseau', name: 'Paul Boris', email: 'paulBoris@gmail.com',
   }, {
-    id: 6, status: 3, dateSubmitted: '18/01/2018', school: 'École élémentaire St-Jean De Bréboeuf', name: 'Amy Sandiago', email: 'amy@gmail.com',
+    id: 6, status: 'new', dateSubmitted: '18/01/2018', school: 'École élémentaire St-Jean De Bréboeuf', name: 'Amy Sandiago', email: 'amy@gmail.com',
   }, {
-    id: 7, status: 3, dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Diaz', email: 'al@gmail.com',
+    id: 7, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Diaz', email: 'al@gmail.com',
   }, {
-    id: 8, status: 4, dateSubmitted: '01/02/2018', school: 'St-Medard', name: 'Jake Travolta', email: 'travolta@gmail.com',
+    id: 8, status: 'confirmed', dateSubmitted: '01/02/2018', school: 'St-Medard', name: 'Jake Travolta', email: 'travolta@gmail.com',
   }, {
-    id: 9, status: 0, dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'soprano@gmail.com',
+    id: 9, status: 'cancelled', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'soprano@gmail.com',
   }, {
-    id: 10, status: 0, dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'sFran@gmail.com',
+    id: 10, status: 'conflict', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'sFran@gmail.com',
   }, {
-    id: 11, status: 1, dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
+    id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
   }];
-
 
 const progBar = {
   width: '25%',
-};
-
-function indication() {
-  return 'No Data';
-}
-const pagination = {
-  paginationSize: 1,
-  hideSizePerPage: true, // Hide the sizePerPage dropdown always
 };
 
 
@@ -77,6 +38,14 @@ export default class RegistrationsPage extends Component {
   constructor() {
     super();
     this.state = { redirect: false };
+  }
+
+  changepage() {
+    this.setState({ redirect: true });
+  }
+
+  onSelectChange(e){
+    console.log('[new status selected]', this.inputStatus.value );
   }
 
   render() {
@@ -91,7 +60,7 @@ export default class RegistrationsPage extends Component {
     };
 
     if (this.state.redirect) {
-      return <Redirect push to="/registrationDetail" />;
+      return < Redirect push to="/registrationDetail" />;
     }
     return (
       <React.Fragment>
@@ -120,40 +89,65 @@ export default class RegistrationsPage extends Component {
         <br />
         <div className="row">
           <div className="col-md-3">
-            <input className="form-control" type="text" placeholder="Search"/>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Filter by statuses</ControlLabel>
+              <FormControl
+                ref='inputStatus'
+                onChange={this.onSelectChange.bind(this)}
+                inputRef={ inputStatus => this.inputStatus=inputStatus }
+                componentClass="select"
+                placeholder="select"
+              >
+                <option value="all">All Statuses</option>
+                <option value="new">New</option>
+                <option value="sent">Sent</option>
+                <option value="conflict">Conflict</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="consent">Consent</option>
+                <option value="paid">Paid</option>
+                <option value="unpayed">Unpayed</option>
+              </FormControl>
+            </FormGroup>
           </div>
-          <div className="col-md-3" />
           <div className="col-md-3">
-            <select className="selectpicker form-control">
-              <option>All Statuses</option>
-              <option>Pending</option>
-              <option>Sent</option>
-              <option>Cancelled</option>
-            </select>
-          </div>
-          <div className="col-md-3">
-            <select className="selectpicker form-control">
-              <option>All Years</option>
-              <option>2018</option>
-              <option>2017</option>
-              <option>2016</option>
-              <option>2015</option>
-            </select>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>By year</ControlLabel>
+              <FormControl
+                // onChange={this.onSelectChange.bind(this)}
+                // inputRef={ el => this.inputEl=el }
+                componentClass="select"
+                placeholder="select"
+              >
+                <option value="">All Years</option>
+                <option value="new">2018</option>
+                <option value="sent">2017</option>
+                <option value="conflict">2016</option>
+                <option value="confirmed">2015</option>
+              </FormControl>
+            </FormGroup>
           </div>
         </div>
-        {/*<BootstrapTable
-          keyField='id'
-          data={registrations}
-          columns={columns}
-          striped
-          hover
-          condensed
-          noDataIndication={indication()}
-          selectRow={selectRow}
-          pagination={PaginationFactory(pagination)}
-        />*/}
+        <div>
+          <BootstrapTable
+            data={registrations}
+            hover
+            striped
+            condensed
+            pagination
+            search
+            searchPlaceholder="Filter registrations..."           
+            selectRow={selectRow}
+          >
+            <TableHeaderColumn dataField="id" isKey hidden searchable={false}>Id</TableHeaderColumn>
+            <TableHeaderColumn dataField="status" ref='status' dataSort >Status</TableHeaderColumn>
+            <TableHeaderColumn dataField="dateSubmitted" dataSort >Date Submitted</TableHeaderColumn>
+            <TableHeaderColumn dataField="school" dataSort >School</TableHeaderColumn>
+            <TableHeaderColumn dataField="name" dataSort >Client</TableHeaderColumn>
+            <TableHeaderColumn dataField="email" dataSort >Email</TableHeaderColumn>
+          </BootstrapTable>
+        </div>
       </React.Fragment>
     );
-    
   }
 }
