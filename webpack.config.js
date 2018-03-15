@@ -10,7 +10,7 @@ const offline = new OfflinePlugin({
 
 module.exports = {
   entry: [
-    './src/index.js'
+    './src/index.jsx'
   ],
   module: {
     rules: [
