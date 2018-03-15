@@ -28,7 +28,7 @@ export default class LoginPage extends Component {
         </div>
         <div className="form-group">
           <div className="row">
-            <div className="col-sm-6 offset-sm-3">
+            <div className="col-sm-6 col-sm-offset-3">
               <button className="form-control btn btn-primary" onClick={this.props.onLogin}>
                 Log in
               </button>
