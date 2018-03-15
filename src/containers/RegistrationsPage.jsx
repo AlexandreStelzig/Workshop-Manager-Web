@@ -45,7 +45,11 @@ export default class RegistrationsPage extends Component {
   }
 
   onSelectChange() {
-    this.statusRef.applyFilter(this.inputStatus.value);
+    if (this.inputStatus.value === 'all') {
+      this.statusRef.cleanFiltered();
+    } else {
+      this.statusRef.applyFilter(this.inputStatus.value);
+    }
   }
   changepage() {
     this.setState({ redirect: true });
