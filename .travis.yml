@@ -6,6 +6,9 @@ node_js:
 #    - npm install nyc
 
 #npm test
+
+install:
+    - npm install --no-optional
     
 branches:
     only:
