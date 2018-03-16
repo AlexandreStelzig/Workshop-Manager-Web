@@ -4,7 +4,7 @@
   "description": "The Web portion of the Event Manager for the SEG4910 Capstone Project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "webpack-dev-server --config ./webpack.config.js --mode development"
   },
   "repository": {
