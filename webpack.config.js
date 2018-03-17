@@ -1,51 +1,50 @@
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var OfflinePlugin = require('offline-plugin');
-
-const offline = new OfflinePlugin({
-  externals: ['index.html'],
-  ServiceWorker: {
-    minify: false
-  }
-});
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// const OfflinePlugin = require('offline-plugin');
+const path = require('path');
 
 module.exports = {
   entry: [
-    './src/index.jsx'
+    './src/index.jsx',
   ],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
         options: {
-          limit: 10000
-        }
-      }
-    ]
+          limit: 10000,
+        },
+      },
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, '/dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
     contentBase: './dist',
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   plugins: [
     new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    offline
-  ]
+    /* new OfflinePlugin({
+      externals: ['index.html'],
+      ServiceWorker: {
+        minify: false,
+      },
+    }), */
+  ],
 };
