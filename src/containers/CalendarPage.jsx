@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import WeekView from '../components/calendar/WeekView';
 import DayView from '../components/calendar/DayView';
+import MonthView from '../components/calendar/MonthView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
 
 export default class CalendarPage extends Component {
@@ -23,6 +24,7 @@ export default class CalendarPage extends Component {
       { id: 1, name: 'Instructor' },
       { id: 2, name: 'Bin' },
     ];
+
     return (
       <React.Fragment>
         <div>
@@ -44,6 +46,8 @@ export default class CalendarPage extends Component {
           <br />
           {this.state.viewMode === 'Week' && <WeekView />}
           {this.state.viewMode === 'Day' && <DayView />}
+          {this.state.viewMode === 'Month' && <MonthView />}
+
         </div>
       </React.Fragment>
     );
