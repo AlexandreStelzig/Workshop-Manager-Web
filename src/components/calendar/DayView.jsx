@@ -28,9 +28,18 @@ export default class DayView extends Component {
       '17h00',
     ];
 
+    const items = [{
+      schoolName: '',
+      status: '',
+      startDateTime: '',
+      endDateTime: '',
+      workshops: ['3D Printing', 'Electricity', 'Bebot'],
+    },
+    ];
+
     return (
       <div>
-        <CalendarGrid rows={times} cols={resources} />
+        <CalendarGrid rows={times} cols={resources} items={items} />
         <div className="row">
           <div className="col-md-4">
             <button type="button" className="btn btn-secondary">&lt; Previous Day</button>
