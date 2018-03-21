@@ -44,6 +44,7 @@ export default class CalendarPage extends Component {
             </div>
           </div>
           <br />
+          <br />
           {this.state.viewMode === 'Week' && <WeekView />}
           {this.state.viewMode === 'Day' && <DayView />}
           {this.state.viewMode === 'Month' && <MonthView />}
