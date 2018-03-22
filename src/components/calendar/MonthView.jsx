@@ -1,3 +1,4 @@
+/* eslint react/prefer-stateless-function: 0 */ // temp disable since it will have state later on
 import React, { Component } from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
