@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import styled from 'styled-components';
 import WeekView from '../components/calendar/WeekView';
 import DayView from '../components/calendar/DayView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
+
+const TopCalContainer = styled.div`
+  overflow: hidden;
+  padding-bottom: 15px;
+`;
 
 export default class CalendarPage extends Component {
   constructor() {
@@ -23,12 +29,13 @@ export default class CalendarPage extends Component {
       { id: 1, name: 'Instructor' },
       { id: 2, name: 'Bin' },
     ];
+
     return (
       <React.Fragment>
         <div>
           <h1>Calendar</h1>
           <h2>{this.state.viewMode} view</h2>
-          <div className="form-inline">
+          <TopCalContainer className="form-inline">
             <div className="col-md-4">
               <input type="date" className="form-control" />
               <SimpleDropdown items={resources} />
@@ -40,8 +47,7 @@ export default class CalendarPage extends Component {
                 <ToggleButton value="Month">Month</ToggleButton>
               </ToggleButtonGroup>
             </div>
-          </div>
-          <br />
+          </TopCalContainer>
           {this.state.viewMode === 'Week' && <WeekView />}
           {this.state.viewMode === 'Day' && <DayView />}
         </div>
