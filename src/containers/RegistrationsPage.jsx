@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const registrations = [
   {
@@ -30,9 +30,6 @@ const registrations = [
     id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
   }];
 
-const statuses = {
-};
-
 const progBar = {
   width: '25%',
 };
@@ -40,17 +37,25 @@ const progBar = {
 export default class RegistrationsPage extends Component {
   constructor() {
     super();
-    this.state = { redirect: false };
-    this.onSelectChange = this.onSelectChange.bind(this);
+    this.state = {
+      filterStatus: 'all',
+      redirect: false,
+    };
+    this.onToggleChange = this.onToggleChange.bind(this);
   }
 
-  onSelectChange() {
-    if (this.inputStatus.value === 'all') {
-      this.statusRef.cleanFiltered();
-    } else {
-      this.statusRef.applyFilter(this.inputStatus.value);
+  onToggleChange(e) {
+    if (e === 'all') {
+      this.setState({ filterStatus: 'all' });
+      this.refs.table.handleFilterData({ status: '' });
+      this.refs.table.cleanFiltered();
+    }
+    else {
+      this.setState({ filterStatus: e });
+      this.refs.table.handleFilterData({ status: e });
     }
   }
+
   changepage() {
     this.setState({ redirect: true });
   }
@@ -95,27 +100,6 @@ export default class RegistrationsPage extends Component {
         <div className="row">
           <div className="col-md-3">
             <FormGroup controlId="formControlsSelect">
-              <ControlLabel>Filter by statuses</ControlLabel>
-              <FormControl
-                onChange={this.onSelectChange}
-                inputRef={(inputStatus) => { this.inputStatus = inputStatus; }}
-                componentClass="select"
-                placeholder="select"
-              >
-                <option value="all">All Statuses</option>
-                <option value="new">New</option>
-                <option value="sent">Sent</option>
-                <option value="conflict">Conflict</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="cancelled">Cancelled</option>
-                <option value="consent">Consent</option>
-                <option value="paid">Paid</option>
-                <option value="unpayed">Unpayed</option>
-              </FormControl>
-            </FormGroup>
-          </div>
-          <div className="col-md-3">
-            <FormGroup controlId="formControlsSelect">
               <ControlLabel>By year</ControlLabel>
               <FormControl
                 componentClass="select"
@@ -131,7 +115,20 @@ export default class RegistrationsPage extends Component {
           </div>
         </div>
         <div>
+          <ToggleButtonGroup justified bsClass=" btn-group" name="viewMode" type="radio" onChange={this.onToggleChange} value={this.state.filterStatus}>
+            <ToggleButton value="all">All Statuses</ToggleButton>
+            <ToggleButton value="new">New</ToggleButton>
+            <ToggleButton value="sent">Sent</ToggleButton>
+            <ToggleButton value="conflict">Conflict</ToggleButton>
+            <ToggleButton value="confirmed">Confirmed</ToggleButton>
+            <ToggleButton value="cancelled">Cancelled</ToggleButton>
+            <ToggleButton value="consent">Consent</ToggleButton>
+            <ToggleButton value="paid">Paid</ToggleButton>
+            <ToggleButton value="unpayed">Unpayed</ToggleButton>
+          </ToggleButtonGroup>
           <BootstrapTable
+            inputRef="table"
+            ref="table"
             data={registrations}
             hover
             striped
@@ -142,7 +139,7 @@ export default class RegistrationsPage extends Component {
             selectRow={selectRow}
           >
             <TableHeaderColumn dataField="id" isKey hidden searchable={false}>Id</TableHeaderColumn>
-            <TableHeaderColumn dataField="status" ref={(statusRef) => { this.statusRef = statusRef; }} filter={{ type: 'SelectFilter', options: statuses }} dataSort >Status</TableHeaderColumn>
+            <TableHeaderColumn dataField="status" filterFormatted dataSort >Status</TableHeaderColumn>
             <TableHeaderColumn dataField="dateSubmitted" dataSort >Date Submitted</TableHeaderColumn>
             <TableHeaderColumn dataField="school" dataSort >School</TableHeaderColumn>
             <TableHeaderColumn dataField="name" dataSort >Client</TableHeaderColumn>
