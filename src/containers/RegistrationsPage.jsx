@@ -29,10 +29,30 @@ const registrations = [
   }, {
     id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
   }];
+const statusCount = [
+  {
+    status: 'all', count: 11,
+  }, {
+    status: 'new', count: 3,
+  }, {
+    status: 'sent', count: 2,
+  }, {
+    status: 'conflict', count: 1,
+  }, {
+    status: 'confirmed', count: 4,
+  }, {
+    status: 'cancelled', count: 2,
+  }, {
+    status: 'consent', count: 0,
+  }, {
+    status: 'unpayed', count: 0,
+  }];
 
 const progBar = {
   width: '25%',
 };
+
+/*const headRows = this.props.cols.map(col => <th key={col}>{col}</th>);*/
 
 export default class RegistrationsPage extends Component {
   constructor() {
@@ -47,12 +67,13 @@ export default class RegistrationsPage extends Component {
   onToggleChange(e) {
     if (e === 'all') {
       this.setState({ filterStatus: 'all' });
-      this.refs.table.handleFilterData({ status: '' });
-      this.refs.table.cleanFiltered();
-    }
-    else {
+      this.tableRef.handleFilterData({ status: '' });
+    } else if (e === 'unpayed') {
+      this.setState({ filterStatus: 'all' });
+      this.tableRef.handleFilterData({ status: '' });
+    } else {
       this.setState({ filterStatus: e });
-      this.refs.table.handleFilterData({ status: e });
+      this.tableRef.handleFilterData({ status: e });
     }
   }
 
@@ -116,19 +137,18 @@ export default class RegistrationsPage extends Component {
         </div>
         <div>
           <ToggleButtonGroup justified bsClass=" btn-group" name="viewMode" type="radio" onChange={this.onToggleChange} value={this.state.filterStatus}>
-            <ToggleButton value="all">All Statuses</ToggleButton>
-            <ToggleButton value="new">New</ToggleButton>
-            <ToggleButton value="sent">Sent</ToggleButton>
-            <ToggleButton value="conflict">Conflict</ToggleButton>
-            <ToggleButton value="confirmed">Confirmed</ToggleButton>
-            <ToggleButton value="cancelled">Cancelled</ToggleButton>
-            <ToggleButton value="consent">Consent</ToggleButton>
-            <ToggleButton value="paid">Paid</ToggleButton>
-            <ToggleButton value="unpayed">Unpayed</ToggleButton>
+            <ToggleButton value="all">All Statuses ({ statusCount[0].count })</ToggleButton>
+            <ToggleButton value="new">New ({ statusCount[1].count })</ToggleButton>
+            <ToggleButton value="sent">Sent ({ statusCount[2].count })</ToggleButton>
+            <ToggleButton value="conflict">Conflict ({ statusCount[3].count })</ToggleButton>
+            <ToggleButton value="confirmed">Confirmed ({ statusCount[4].count })</ToggleButton>
+            <ToggleButton value="cancelled">Cancelled ({ statusCount[5].count })</ToggleButton>
+            <ToggleButton value="consent">Consent ({ statusCount[6].count })</ToggleButton>
+            <ToggleButton value="unpayed">Unpayed ({ statusCount[7].count })</ToggleButton>
           </ToggleButtonGroup>
           <BootstrapTable
             inputRef="table"
-            ref="table"
+            ref={(tableRef) => { this.tableRef = tableRef; }}
             data={registrations}
             hover
             striped
