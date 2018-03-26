@@ -1,45 +1,51 @@
 /* eslint react/prefer-stateless-function: 0 */ // temp disable since it will have state later on
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import CalendarGrid from './CalendarGrid';
 
 
 export default class DayView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      resources: [
+        'Van 1',
+        'Van 2',
+        'Van 3',
+        'Van 4',
+        'On Campus',
+      ],
+      times: [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+      ],
+    };
+  }
+
   render() {
-    const resources = [
-      'Van 1',
-      'Van 2',
-      'Van 3',
-      'Van 4',
-      'On Campus',
-    ];
+    const timesString = this.state.times.map(time => `${time}:h00`);
 
-    const times = [
-      '6h00',
-      '7h00',
-      '8h00',
-      '9h00',
-      '10h00',
-      '11h00',
-      '12h00',
-      '13h00',
-      '14h00',
-      '15h00',
-      '16h00',
-      '17h00',
-    ];
-
-    const items = [{
-      schoolName: '',
-      status: '',
-      startDateTime: '',
-      endDateTime: '',
-      workshops: ['3D Printing', 'Electricity', 'Bebot'],
-    },
-    ];
+    const { items } = this.props;
+    for (let i = 0; i < items.length; i++) {
+      items[i].colIndex = this.state.resources.indexOf(items[i].resource);
+      items[i].rowIndexStart = this.state.times.indexOf(items[i].startDateTime.getHours());
+      items[i].rowIndexEnd = this.state.times.indexOf(items[i].endDateTime.getHours());
+    }
 
     return (
       <div>
-        <CalendarGrid rows={times} cols={resources} items={items} />
+        <CalendarGrid rows={timesString} cols={this.state.resources} items={items} />
         <div className="row">
           <div className="col-md-4">
             <button type="button" className="btn btn-secondary">&lt; Previous Day</button>
@@ -52,3 +58,16 @@ export default class DayView extends Component {
     );
   }
 }
+DayView.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    schoolName: PropTypes.string,
+    status: PropTypes.string,
+    startDateTime: PropTypes.instanceOf(Date),
+    endDateTime: PropTypes.instanceOf(Date),
+    workshops: PropTypes.arrayOf(PropTypes.string),
+  })),
+};
+DayView.defaultProps = {
+  items: [],
+};
