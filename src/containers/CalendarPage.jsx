@@ -3,6 +3,7 @@ import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import styled from 'styled-components';
 import WeekView from '../components/calendar/WeekView';
 import DayView from '../components/calendar/DayView';
+import MonthView from '../components/calendar/MonthView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
 
 const TopCalContainer = styled.div`
@@ -61,6 +62,7 @@ export default class CalendarPage extends Component {
           </TopCalContainer>
           {this.state.viewMode === 'Week' && <WeekView items={items} initialFirstDayOfWeek={initialFirstDayOfWeek} />}
           {this.state.viewMode === 'Day' && <DayView items={items} />}
+          {this.state.viewMode === 'Month' && <MonthView />}
         </div>
       </React.Fragment>
     );
