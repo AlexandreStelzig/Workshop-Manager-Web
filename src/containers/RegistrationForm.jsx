@@ -65,6 +65,7 @@ export default class RegistrationForm extends Component {
       workshopLocation: 'Your location',
       preferredDate: '',
       alternateDate: '',
+      pageKey: 1,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleWorkshopChange = this.handleWorkshopChange.bind(this);
@@ -97,7 +98,7 @@ export default class RegistrationForm extends Component {
   }
 
   handleNext() {
-    this.setState({ pageKey: 2 });
+    this.setState({ pageKey: this.state.pageKey + 1 });
   }
 
   handleAdd() {
@@ -111,10 +112,10 @@ export default class RegistrationForm extends Component {
   }
 
   handleBack() {
-    this.setState({ pageKey: 1 });
+    this.setState({ pageKey: this.state.pageKey - 1 });
   }
 
-  //Temporary submit function
+  // Temporary submit function
   handleSubmit() { // eslint-disable-line
     alert('Form submitted!'); // eslint-disable-line
   }
@@ -546,6 +547,16 @@ export default class RegistrationForm extends Component {
                     </BootstrapTable>
                   </Col>
                 </Row>
+                <br />
+                <Row>
+                  <Col md={2}>
+                    <Button onClick={this.handleBack}>Back to general information</Button>
+                  </Col>
+                  <Col md={8} />
+                  <Col md={2}>
+                    <Button bsStyle="primary" onClick={this.handleNext}>Next</Button>
+                  </Col>
+                </Row>
               </Tab>
               <Tab eventKey={3} title="Workshops selection">
                 <Row>
@@ -644,7 +655,7 @@ export default class RegistrationForm extends Component {
                 <br />
                 <Row>
                   <Col md={2}>
-                    <Button onClick={this.handleBack}>Back to group information</Button>
+                    <Button onClick={this.handleBack}>Back to teacher information</Button>
                   </Col>
                   <Col md={8} />
                   <Col md={2}>
