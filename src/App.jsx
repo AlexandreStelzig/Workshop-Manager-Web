@@ -12,6 +12,7 @@ import UsersPage from './containers/UsersPage';
 import ResourcesPage from './containers/ResourcesPage';
 import WorkshopsPage from './containers/WorkshopsPage';
 import LoginPage from './containers/LoginPage';
+import RegistrationForm from './containers/RegistrationForm';
 import AuthService from './services/AuthService';
 import History from './utils/History';
 
@@ -51,6 +52,7 @@ export default class App extends Component {
             <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
             <PrivateRoute exact path="/users" component={UsersPage} />
             <PrivateRoute exact path="/settings" component={SettingsPage} />
+            <PrivateRoute exact path="/register" component={RegistrationForm} />
           </div>
         </React.Fragment>
       </Router>

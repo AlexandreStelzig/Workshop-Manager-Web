@@ -16,7 +16,7 @@ const cellEditProperties = {
   blurToSave: true,
 };
 
-function buttonToolbarFormatter(cell, row){
+function buttonToolbarFormatter(cell, row) {
   return (
     <ButtonToolbar>
       <Button bsStyle="success">Availabilities</Button>
