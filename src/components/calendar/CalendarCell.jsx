@@ -30,7 +30,6 @@ export const ItemCell = Cell.extend`
   margin-right: 1px;
   margin-bottom: 1px;
   padding: 5px;
-  text-align: center;
 `;
 
 const calcBottomWidth = (row, isLastRow) => {

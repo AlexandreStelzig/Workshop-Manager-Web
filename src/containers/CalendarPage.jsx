@@ -30,6 +30,17 @@ export default class CalendarPage extends Component {
       { id: 2, name: 'Bin' },
     ];
 
+    const items = [{
+      id: 0,
+      schoolName: 'Ecole des Rapides-Deschenes',
+      status: 'Confirmed',
+      startDateTime: new Date(2018, 1, 2, 8, 30),
+      endDateTime: new Date(2018, 1, 2, 12, 0),
+      workshops: ['3D Printing', 'Electricity'],
+      resource: 'Van 1',
+    }];
+    const initialFirstDayOfWeek = new Date(2018, 1, 1);
+
     return (
       <React.Fragment>
         <div>
@@ -48,8 +59,8 @@ export default class CalendarPage extends Component {
               </ToggleButtonGroup>
             </div>
           </TopCalContainer>
-          {this.state.viewMode === 'Week' && <WeekView />}
-          {this.state.viewMode === 'Day' && <DayView />}
+          {this.state.viewMode === 'Week' && <WeekView items={items} initialFirstDayOfWeek={initialFirstDayOfWeek} />}
+          {this.state.viewMode === 'Day' && <DayView items={items} />}
         </div>
       </React.Fragment>
     );

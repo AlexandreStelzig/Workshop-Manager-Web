@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { HeaderCell, BackgroundCell, ItemCell } from './CalendarCell';
+import { HeaderCell, BackgroundCell } from './CalendarCell';
 import CalendarItem from './CalendarItem';
 
 
@@ -18,13 +18,6 @@ const GridContainer = styled.div`
 `;
 
 export default class CalendarGrid extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: props.items,
-    };
-  }
-
   render() {
     const backgroundItems = [];
 
@@ -42,16 +35,26 @@ export default class CalendarGrid extends Component {
         backgroundItems.push(<BackgroundCell key={`r${i + 1}_${j + 1}`} rowStart={i + 2} colStart={j + 2} rowEnd={i + 2} colEnd={j + 2} isLastCol={j === this.props.cols.length - 1} isLastRow={i === this.props.rows.length - 1} />);
       }
     }
-    const workshops = ['workshop1'];
-    const start = new Date();
-    const end = new Date();
+
+    const calItems = this.props.items.map(item => (
+      <CalendarItem
+        key={item.id}
+        schoolName={item.schoolName}
+        status={item.status}
+        startDateTime={item.startDateTime}
+        endDateTime={item.endDateTime}
+        workshops={item.workshops}
+        rowStart={item.rowIndexStart + 2}
+        colStart={item.colIndex + 2}
+        rowEnd={item.rowIndexEnd + 2}
+        colEnd={item.colIndex + 2}
+      />
+    ));
 
     return (
       <GridContainer numberOfCols={this.props.cols.length + 1}>
         {backgroundItems}
-        <ItemCell rowStart={2} colStart={2} rowEnd={5} colEnd={2} >text too cell</ItemCell>
-        <ItemCell rowStart={4} colStart={5} rowEnd={4} colEnd={5} >MINE too cell</ItemCell>
-        <CalendarItem schoolName="test name" status={0} startDateTime={start} endDateTime={end} workshops={workshops} />
+        {calItems}
       </GridContainer>
     );
   }
@@ -60,11 +63,15 @@ CalendarGrid.propTypes = {
   rows: PropTypes.arrayOf(PropTypes.string).isRequired,
   cols: PropTypes.arrayOf(PropTypes.string).isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
     schoolName: PropTypes.string,
-    status: PropTypes.number,
+    status: PropTypes.string,
     startDateTime: PropTypes.instanceOf(Date),
     endDateTime: PropTypes.instanceOf(Date),
     workshops: PropTypes.arrayOf(PropTypes.string),
+    colIndex: PropTypes.number,
+    rowIndexStart: PropTypes.number,
+    rowIndexEnd: PropTypes.number,
   })),
 };
 
