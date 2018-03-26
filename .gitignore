@@ -1,2 +1,7 @@
 /node_modules
 package-lock.json 
+.DS_STORE
+build/
+.module-cache
+npm-debug.log
+.env
