@@ -7,7 +7,6 @@ import CalendarGrid from './CalendarGrid';
 export default class DayView extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       resources: [
         'Van 1',
@@ -34,7 +33,7 @@ export default class DayView extends Component {
   }
 
   render() {
-    const timesString = this.state.times.map(time => `${time}:h00`);
+    const timesString = this.state.times.map(time => `${time}h00`);
 
     const { items } = this.props;
     for (let i = 0; i < items.length; i++) {

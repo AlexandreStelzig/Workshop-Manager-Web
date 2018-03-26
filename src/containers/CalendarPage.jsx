@@ -35,12 +35,12 @@ export default class CalendarPage extends Component {
       id: 0,
       schoolName: 'Ecole des Rapides-Deschenes',
       status: 'Confirmed',
-      startDateTime: new Date(2018, 1, 2, 8, 30),
-      endDateTime: new Date(2018, 1, 2, 12, 0),
+      startDateTime: new Date(2018, 0, 2, 8, 30),
+      endDateTime: new Date(2018, 0, 2, 12, 0),
       workshops: ['3D Printing', 'Electricity'],
       resource: 'Van 1',
     }];
-    const initialFirstDayOfWeek = new Date(2018, 1, 1);
+    const initialFirstDayOfWeek = new Date(2018, 0, 1);
 
     return (
       <React.Fragment>

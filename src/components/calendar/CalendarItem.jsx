@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 import { ItemCell } from './CalendarCell';
 
 const CenteredDiv = styled.div`
@@ -28,8 +29,7 @@ export default class CalendarItem extends Component {
     return (
       <ItemCell {...rest} >
         <CenteredDiv>
-          {/* TODO: Use moment.js or something similar */}
-          <div>{`${startDateTime.getHours()}:${startDateTime.getMinutes()}-${endDateTime.getHours()}:${endDateTime.getMinutes()}`}</div>
+          <div>{`${moment(startDateTime).format('hh:mm')} - ${moment(endDateTime).format('hh:mm')}`}</div>
           <div>{status}</div>
           <div>{schoolName}</div>
         </CenteredDiv>

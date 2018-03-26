@@ -1,6 +1,7 @@
 /* eslint react/prefer-stateless-function: 0 */ // temp disable since it will have state later on
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import CalendarGrid from './CalendarGrid';
 
 export default class WeekView extends Component {
@@ -20,26 +21,17 @@ export default class WeekView extends Component {
     this.state.firstDayOfWeek = props.initialFirstDayOfWeek;
   }
 
-  // TODO: use moment.js or something similar
-  dateDiffInDays(a, b) {
-    const MS_PER_DAY = 1000 * 60 * 60 * 24;
-    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-    return Math.floor((utc2 - utc1) / MS_PER_DAY);
-  }
-
   render() {
     const days = [];
 
     for (let i = 0; i < 7; i++) {
-      const day = new Date(this.state.firstDayOfWeek.getYear(), this.state.firstDayOfWeek.getMonth(), this.state.firstDayOfWeek.getDate() + i);
-      days[i] = day.toDateString();
+      const day = new Date(this.state.firstDayOfWeek.getFullYear(), this.state.firstDayOfWeek.getMonth(), this.state.firstDayOfWeek.getDate() + i);
+      days[i] = moment(day).format('ddd, MMM Do YYYY');
     }
 
     const { items } = this.props;
     for (let i = 0; i < items.length; i++) {
-      items[i].colIndex = this.dateDiffInDays(this.state.firstDayOfWeek, items[i].startDateTime);
+      items[i].colIndex = moment(items[i].startDateTime).diff(this.state.firstDayOfWeek, 'days');
       const rowIndex = this.state.resources.indexOf(items[i].resource);
       items[i].rowIndexStart = rowIndex;
       items[i].rowIndexEnd = rowIndex;
