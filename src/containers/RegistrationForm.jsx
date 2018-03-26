@@ -65,6 +65,7 @@ export default class RegistrationForm extends Component {
       workshopLocation: 'Your location',
       preferredDate: '',
       alternateDate: '',
+      pageKey: 1,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleWorkshopChange = this.handleWorkshopChange.bind(this);
@@ -97,7 +98,7 @@ export default class RegistrationForm extends Component {
   }
 
   handleNext() {
-    this.setState({ pageKey: 2 });
+    this.setState({ pageKey: this.state.pageKey + 1 });
   }
 
   handleAdd() {
@@ -111,11 +112,12 @@ export default class RegistrationForm extends Component {
   }
 
   handleBack() {
-    this.setState({ pageKey: 1 });
+    this.setState({ pageKey: this.state.pageKey - 1 });
   }
 
-  handleSubmit() {
-    alert('Form submitted!'); // eslint-disable-line no-alert
+  // Temporary submit function
+  handleSubmit() { // eslint-disable-line
+    alert('Form submitted!'); // eslint-disable-line
   }
 
   render() {
@@ -133,7 +135,7 @@ export default class RegistrationForm extends Component {
               onSelect={this.handlePageSelect}
               id="pageTab"
             >
-              <Tab eventKey={1} title="Group information">
+              <Tab eventKey={1} title="General information">
                 <FormGroup
                   controlId="formContactInformation"
                 >
@@ -142,11 +144,12 @@ export default class RegistrationForm extends Component {
                     <Col md={4}>
                       <h3> Contact information </h3>
                     </Col>
-                    <Col md={4} />
+                    <Col md={4}>
+                      <h3>Step 1 of 3</h3>
+                    </Col>
                   </Row>
                   <Row>
-                    <Col md={2} />
-                    <Col md={4}>
+                    <Col md={6}>
                       <ControlLabel>First name</ControlLabel>
                       <FormControl
                         type="text"
@@ -156,7 +159,7 @@ export default class RegistrationForm extends Component {
                         onChange={this.handleChange}
                       />
                     </Col>
-                    <Col md={4}>
+                    <Col md={6}>
                       <ControlLabel>Email</ControlLabel>
                       <FormControl
                         type="email"
@@ -166,11 +169,9 @@ export default class RegistrationForm extends Component {
                         onChange={this.handleChange}
                       />
                     </Col>
-                    <Col md={2} />
                   </Row>
                   <Row>
-                    <Col md={2} />
-                    <Col md={4}>
+                    <Col md={6}>
                       <ControlLabel>Last name</ControlLabel>
                       <FormControl
                         type="text"
@@ -180,7 +181,7 @@ export default class RegistrationForm extends Component {
                         onChange={this.handleChange}
                       />
                     </Col>
-                    <Col md={4}>
+                    <Col md={6}>
                       <ControlLabel>Phone number</ControlLabel>
                       <FormControl
                         type="tel"
@@ -190,7 +191,6 @@ export default class RegistrationForm extends Component {
                         onChange={this.handleChange}
                       />
                     </Col>
-                    <Col md={2} />
                   </Row>
                 </FormGroup>
                 <FormGroup
@@ -204,8 +204,7 @@ export default class RegistrationForm extends Component {
                     <Col md={4} />
                   </Row>
                   <Row>
-                    <Col md={2} />
-                    <Col md={8}>
+                    <Col>
                       <Tabs
                         activeKey={this.state.groupKey}
                         onSelect={this.handleSelect}
@@ -214,22 +213,22 @@ export default class RegistrationForm extends Component {
                         <Tab eventKey={1} title="School">
                           <Row>
                             <Col md={6}>
-                              <ControlLabel>School name</ControlLabel>
-                              <FormControl
-                                type="text"
-                                name="groupName"
-                                value={this.state.groupName}
-                                placeholder="School name"
-                                onChange={this.handleChange}
-                              />
-                            </Col>
-                            <Col md={6}>
                               <ControlLabel>School board</ControlLabel>
                               <FormControl
                                 type="text"
                                 name="schoolBoard"
                                 value={this.state.schoolBoard}
                                 placeholder="School board"
+                                onChange={this.handleChange}
+                              />
+                            </Col>
+                            <Col md={6}>
+                              <ControlLabel>School name</ControlLabel>
+                              <FormControl
+                                type="text"
+                                name="groupName"
+                                value={this.state.groupName}
+                                placeholder="School name"
                                 onChange={this.handleChange}
                               />
                             </Col>
@@ -503,7 +502,6 @@ export default class RegistrationForm extends Component {
                         </Tab>
                       </Tabs>
                     </Col>
-                    <Col md={2} />
                   </Row>
                   <br />
                   <Row>
@@ -514,12 +512,21 @@ export default class RegistrationForm extends Component {
                   </Row>
                 </FormGroup>
               </Tab>
-              <Tab eventKey={2} title="Workshops selection">
+              <Tab eventKey={2} title="Teacher information">
                 <Row>
                   <Col md={4}>
                     <h3>Teachers</h3>
                   </Col>
-                  <Col md={8} />
+                  <Col md={4} />
+                  <Col md={4}>
+                    <h3>Step 2 of 3</h3>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <p>Click &quot;new&quot; to add the information of each teacher who will be participating or supervising the workshops.</p>
+                    <p>If a teacher has multiple classes, enter them as many times as necessary but with a different group name. Please make sure that group names are unique.</p>
+                  </Col>
                 </Row>
                 <Row>
                   <Col md={12}>
@@ -540,6 +547,18 @@ export default class RegistrationForm extends Component {
                     </BootstrapTable>
                   </Col>
                 </Row>
+                <br />
+                <Row>
+                  <Col md={2}>
+                    <Button onClick={this.handleBack}>Back to general information</Button>
+                  </Col>
+                  <Col md={8} />
+                  <Col md={2}>
+                    <Button bsStyle="primary" onClick={this.handleNext}>Next</Button>
+                  </Col>
+                </Row>
+              </Tab>
+              <Tab eventKey={3} title="Workshops selection">
                 <Row>
                   <Col md={3}>
                     <h3>Workshops</h3>
@@ -556,17 +575,20 @@ export default class RegistrationForm extends Component {
                       <option value="On campus" >On campus</option>
                     </FormControl>
                   </Col>
-                  <Col md={6} />
+                  <Col md={2} />
+                  <Col md={4}>
+                    <h3>Step 3 of 3</h3>
+                  </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col md={3}>
                     <ControlLabel>Preferred date</ControlLabel>
-                    <input type="date" id="preferredDatePicker" name="preferredDate" value={this.state.preferredDate} />
+                    <input type="date" id="preferredDatePicker" name="preferredDate" value={this.state.preferredDate} onChange={this.handleChange} />
                   </Col>
                   <Col md={3}>
                     <ControlLabel>Alternative date</ControlLabel>
-                    <input type="date" id="alternateDatePicker" name="alternateDate" value={this.state.alternateDate} />
+                    <input type="date" id="alternateDatePicker" name="alternateDate" value={this.state.alternateDate} onChange={this.handleChange} />
                   </Col>
                   <Col md={3} />
                 </Row>
@@ -615,7 +637,6 @@ export default class RegistrationForm extends Component {
                       <TableHeaderColumn dataField="topic" editable={false}>Topic</TableHeaderColumn>
                       <TableHeaderColumn dataField="groupName" editable={{ type: 'select', options: { values: ['Select group'] } }}>Group Name</TableHeaderColumn>
                       <TableHeaderColumn dataField="teacher">Teacher</TableHeaderColumn>
-                      <TableHeaderColumn dataField="time" editable={{ type: 'select', options: { values: ['Select time'] } }} >Time (optional)</TableHeaderColumn>
                     </BootstrapTable>
                   </Col>
                 </Row>
@@ -634,7 +655,7 @@ export default class RegistrationForm extends Component {
                 <br />
                 <Row>
                   <Col md={2}>
-                    <Button onClick={this.handleBack}>Back to group information</Button>
+                    <Button onClick={this.handleBack}>Back to teacher information</Button>
                   </Col>
                   <Col md={8} />
                   <Col md={2}>
