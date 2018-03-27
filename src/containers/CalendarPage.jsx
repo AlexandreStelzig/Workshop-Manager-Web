@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import styled from 'styled-components';
 import WeekView from '../components/calendar/WeekView';
 import DayView from '../components/calendar/DayView';
 import MonthView from '../components/calendar/MonthView';
 import SimpleDropdown from '../components/editors/SimpleDropdown';
+
+const TopCalContainer = styled.div`
+  overflow: hidden;
+  padding-bottom: 15px;
+`;
 
 export default class CalendarPage extends Component {
   constructor() {
@@ -25,12 +31,23 @@ export default class CalendarPage extends Component {
       { id: 2, name: 'Bin' },
     ];
 
+    const items = [{
+      id: 0,
+      schoolName: 'Ecole des Rapides-Deschenes',
+      status: 'Confirmed',
+      startDateTime: new Date(2018, 0, 2, 8, 30),
+      endDateTime: new Date(2018, 0, 2, 12, 0),
+      workshops: ['3D Printing', 'Electricity'],
+      resource: 'Van 1',
+    }];
+    const initialFirstDayOfWeek = new Date(2018, 0, 1);
+
     return (
       <React.Fragment>
         <div>
           <h1>Calendar</h1>
           <h2>{this.state.viewMode} view</h2>
-          <div className="form-inline">
+          <TopCalContainer className="form-inline">
             <div className="col-md-4">
               <input type="date" className="form-control" />
               <SimpleDropdown items={resources} />
@@ -42,13 +59,10 @@ export default class CalendarPage extends Component {
                 <ToggleButton value="Month">Month</ToggleButton>
               </ToggleButtonGroup>
             </div>
-          </div>
-          <br />
-          <br />
-          {this.state.viewMode === 'Week' && <WeekView />}
-          {this.state.viewMode === 'Day' && <DayView />}
+          </TopCalContainer>
+          {this.state.viewMode === 'Week' && <WeekView items={items} initialFirstDayOfWeek={initialFirstDayOfWeek} />}
+          {this.state.viewMode === 'Day' && <DayView items={items} />}
           {this.state.viewMode === 'Month' && <MonthView />}
-
         </div>
       </React.Fragment>
     );

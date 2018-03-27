@@ -3,6 +3,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+  devtool: 'source-map',
   entry: [
     './src/index.jsx',
   ],
