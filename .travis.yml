@@ -1,12 +1,16 @@
 language: node_js
 node_js:
-    - "node"
+  - "node"
 
 install:
-    - npm install -g mocha
-    - npm install --no-optional
+  - npm install -g mocha
+  - npm install --no-optional
+    
+cache:
+  directories:
+    - "node_modules"
     
 branches:
-    only:
+  only:
     - gh-pages
     - /.*/
