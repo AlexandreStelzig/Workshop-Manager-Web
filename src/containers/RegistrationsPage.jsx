@@ -2,57 +2,56 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
 import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 const registrations = [
   {
-    id: 0, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com',
+    id: 0, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com', isPayed: true,
   }, {
-    id: 1, status: 'sent', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'simon123@gmail.com',
+    id: 1, status: 'sent', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'simon123@gmail.com', isPayed: true,
   }, {
-    id: 2, status: 'sent', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com',
+    id: 2, status: 'sent', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com', isPayed: true,
   }, {
-    id: 3, status: 'confirmed', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com',
+    id: 3, status: 'confirmed', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com', isPayed: false,
   }, {
-    id: 4, status: 'confirmed', dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com',
+    id: 4, status: 'confirmed', dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com', isPayed: false,
   }, {
-    id: 5, status: 'confirmed', dateSubmitted: '07/01/2018', school: 'Petit-Ruisseau', name: 'Paul Boris', email: 'paulBoris@gmail.com',
+    id: 5, status: 'confirmed', dateSubmitted: '07/01/2018', school: 'Petit-Ruisseau', name: 'Paul Boris', email: 'paulBoris@gmail.com', isPayed: false,
   }, {
-    id: 6, status: 'new', dateSubmitted: '18/01/2018', school: 'École élémentaire St-Jean De Bréboeuf', name: 'Amy Sandiago', email: 'amy@gmail.com',
+    id: 6, status: 'new', dateSubmitted: '18/01/2018', school: 'École élémentaire St-Jean De Bréboeuf', name: 'Amy Sandiago', email: 'amy@gmail.com', isPayed: true,
   }, {
-    id: 7, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Diaz', email: 'al@gmail.com',
+    id: 7, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Diaz', email: 'al@gmail.com', isPayed: true,
   }, {
-    id: 8, status: 'confirmed', dateSubmitted: '01/02/2018', school: 'St-Medard', name: 'Jake Travolta', email: 'travolta@gmail.com',
+    id: 8, status: 'confirmed', dateSubmitted: '01/02/2018', school: 'St-Medard', name: 'Jake Travolta', email: 'travolta@gmail.com', isPayed: true,
   }, {
-    id: 9, status: 'cancelled', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'soprano@gmail.com',
+    id: 9, status: 'cancelled', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'soprano@gmail.com', isPayed: false,
   }, {
-    id: 10, status: 'conflict', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'sFran@gmail.com',
+    id: 10, status: 'conflict', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'sFran@gmail.com', isPayed: true,
   }, {
-    id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com',
+    id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com', isPayed: true,
   }];
-const statusCount = [
+const statuses = [
   {
-    status: 'all', count: 11,
+    status: 'all', label: 'All Statuses', count: 11,
   }, {
-    status: 'new', count: 3,
+    status: 'new', label: 'New', count: 3,
   }, {
-    status: 'sent', count: 2,
+    status: 'sent', label: 'Sent', count: 2,
   }, {
-    status: 'conflict', count: 1,
+    status: 'conflict', label: 'Conflict', count: 1,
   }, {
-    status: 'confirmed', count: 4,
+    status: 'confirmed', label: 'Confirmed', count: 4,
   }, {
-    status: 'cancelled', count: 2,
+    status: 'cancelled', label: 'Cancelled', count: 2,
   }, {
-    status: 'consent', count: 0,
+    status: 'consent', label: 'Consent', count: 0,
   }, {
-    status: 'unpayed', count: 0,
+    status: 'unpayed', label: 'Unpayed', count: 3,
   }];
 
 const progBar = {
   width: '25%',
 };
-
-/*const headRows = this.props.cols.map(col => <th key={col}>{col}</th>);*/
 
 export default class RegistrationsPage extends Component {
   constructor() {
@@ -69,8 +68,8 @@ export default class RegistrationsPage extends Component {
       this.setState({ filterStatus: 'all' });
       this.tableRef.handleFilterData({ status: '' });
     } else if (e === 'unpayed') {
-      this.setState({ filterStatus: 'all' });
-      this.tableRef.handleFilterData({ status: '' });
+      this.setState({ filterStatus: 'unpayed' });
+      this.tableRef.handleFilterData({ status: '', isPayed: false });
     } else {
       this.setState({ filterStatus: e });
       this.tableRef.handleFilterData({ status: e });
@@ -89,7 +88,7 @@ export default class RegistrationsPage extends Component {
         this.setState({ redirect: true });
       },
     };
-
+    const toggleItem = statuses.map(a => <ToggleButton value={a.status}>{a.label} ({a.count})</ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
     }
@@ -137,14 +136,7 @@ export default class RegistrationsPage extends Component {
         </div>
         <div>
           <ToggleButtonGroup justified bsClass=" btn-group" name="viewMode" type="radio" onChange={this.onToggleChange} value={this.state.filterStatus}>
-            <ToggleButton value="all">All Statuses ({ statusCount[0].count })</ToggleButton>
-            <ToggleButton value="new">New ({ statusCount[1].count })</ToggleButton>
-            <ToggleButton value="sent">Sent ({ statusCount[2].count })</ToggleButton>
-            <ToggleButton value="conflict">Conflict ({ statusCount[3].count })</ToggleButton>
-            <ToggleButton value="confirmed">Confirmed ({ statusCount[4].count })</ToggleButton>
-            <ToggleButton value="cancelled">Cancelled ({ statusCount[5].count })</ToggleButton>
-            <ToggleButton value="consent">Consent ({ statusCount[6].count })</ToggleButton>
-            <ToggleButton value="unpayed">Unpayed ({ statusCount[7].count })</ToggleButton>
+            {toggleItem}
           </ToggleButtonGroup>
           <BootstrapTable
             inputRef="table"
@@ -164,6 +156,7 @@ export default class RegistrationsPage extends Component {
             <TableHeaderColumn dataField="school" dataSort >School</TableHeaderColumn>
             <TableHeaderColumn dataField="name" dataSort >Client</TableHeaderColumn>
             <TableHeaderColumn dataField="email" dataSort >Email</TableHeaderColumn>
+            <TableHeaderColumn dataField="isPayed" hidden searchable={false}>Payed?</TableHeaderColumn>
           </BootstrapTable>
         </div>
       </React.Fragment>
