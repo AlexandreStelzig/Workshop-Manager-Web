@@ -87,7 +87,7 @@ export default class RegistrationsPage extends Component {
         this.setState({ redirect: true });
       },
     };
-    const toggleItem = statuses.map(a => <ToggleButton value={a.status}>{a.label} ({a.count})</ToggleButton>);
+    const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} ({a.count})</ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
     }
