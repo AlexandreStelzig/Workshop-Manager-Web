@@ -5,10 +5,13 @@ import { ButtonToolbar, Button } from 'react-bootstrap';
 const initialCategories = ['Transportation', 'Bin'];
 const testResources = [
   {
-    id: 0, name: 'TestName', category: 'Transportation', label: '', doubleBooking: 'No', notes: 'I am a test',
+    id: 0, name: 'Van1', category: 'Transportation', label: '', doubleBooking: 'Yes', notes: 'License plate: 2FAST',
   },
   {
-    id: 1, name: 'AnotherTest', category: 'Bin', label: 'B3', doubleBooking: 'Yes', notes: '',
+    id: 1, name: 'Bin 1', category: 'Bin', label: 'B1', doubleBooking: 'No', notes: 'For 3D printing',
+  },
+  {
+    id: 2, name: 'Bin 2', category: 'Bin', label: 'B2', doubleBooking: 'No', notes: 'For Electricity',
   },
 ];
 const cellEditProperties = {
