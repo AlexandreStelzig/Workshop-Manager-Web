@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Navbar, Nav, NavItem, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, FormControl, DropdownButton, NavDropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const WorkshopMenu = ({ onLogout }) => (
@@ -33,10 +33,29 @@ const WorkshopMenu = ({ onLogout }) => (
           Settings
         </NavLink>
       </Nav>
+      <Nav pullRight>
+        <NavDropdown
+          title={
+            <span><i className="glyphicon glyphicon-user" /></span>
+          }
+          id="basic-nav-dropdown"
+        >
+          <DropdownButton title="Year" id="dropdown-size-medium">
+            <MenuItem >2018</MenuItem>
+            <MenuItem >2017</MenuItem>
+            <MenuItem >2016</MenuItem>
+          </DropdownButton>
+          <MenuItem >Action</MenuItem>
+          <MenuItem >Another action</MenuItem>
+          <MenuItem divider />
+          <MenuItem onClick={onLogout}>
+            <span className="glyphicon glyphicon-log-out" /> Logout
+          </MenuItem>
+        </NavDropdown>
+      </Nav>
       <Navbar.Form pullRight>
         <div>
           <FormControl type="text" placeholder="Search" />
-          <Button type="button" onClick={onLogout}>Logout</Button>
         </div>
       </Navbar.Form>
     </Navbar.Collapse>
