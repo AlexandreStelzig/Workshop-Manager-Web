@@ -116,23 +116,6 @@ export default class RegistrationsPage extends Component {
           </div>
         </div>
         <br />
-        <div className="row">
-          <div className="col-md-3">
-            <FormGroup controlId="formControlsSelect">
-              <ControlLabel>By year</ControlLabel>
-              <FormControl
-                componentClass="select"
-                placeholder="select"
-              >
-                <option value="">All Years</option>
-                <option value="new">2018</option>
-                <option value="sent">2017</option>
-                <option value="conflict">2016</option>
-                <option value="confirmed">2015</option>
-              </FormControl>
-            </FormGroup>
-          </div>
-        </div>
         <div>
           <ToggleButtonGroup justified bsClass=" btn-group" name="viewMode" type="radio" onChange={this.onToggleChange} value={this.state.filterStatus}>
             {toggleItem}
