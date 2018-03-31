@@ -507,7 +507,7 @@ export default class RegistrationForm extends Component {
                   <Row>
                     <Col md={9} />
                     <Col md={3}>
-                      <Button bsStyle="primary" onClick={this.handleNext}>Next</Button>
+                      <Button name="pageOneNext" bsStyle="primary" onClick={this.handleNext}>Next</Button>
                     </Col>
                   </Row>
                 </FormGroup>
