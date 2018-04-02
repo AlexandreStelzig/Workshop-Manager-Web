@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-const RegistrationGeneralInformation = require('./RegistrationGeneralInfomation');
-const RegistrationTeacherInformation = require('./RegistrationTeacherInfomation');
-const RegistrationWorkshopInformation = require('./RegistrationWorkshopInfomation');
+import RegistrationGeneralInformation from '../components/registration-information/RegistrationGeneralInfomation';
+import RegistrationTeacherInformation from '../components/registration-information/RegistrationTeacherInfomation';
+import RegistrationWorkshopInformation from '../components/registration-information/RegistrationWorkshopInfomation';
 
 let formValues = {
   contactFirstName: '',
