@@ -31,10 +31,16 @@ export default class App extends Component {
     this.setState({ isLoggedIn: false });
   }
 
-  onLogin() {
-    AuthService.validateLogin();
-    History.push('/');
-    this.setState({ isLoggedIn: true });
+  onLogin(username, password) {
+    AuthService.validateLogin(username, password).then(successful => {
+      if(successful){
+        AuthService.login();
+        History.push('/');
+        this.setState({ isLoggedIn: true });
+      }else{
+        // wrong username or password
+      }
+    });
   }
 
   render() {
