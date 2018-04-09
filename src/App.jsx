@@ -32,9 +32,10 @@ export default class App extends Component {
   }
 
   onLogin() {
-    AuthService.setIsLoggedIn(true);
-    History.push('/');
-    this.setState({ isLoggedIn: true });
+    // AuthService.setIsLoggedIn(true);
+    AuthService.validateLogin();
+    // History.push('/');
+    // this.setState({ isLoggedIn: true });
   }
 
   render() {
