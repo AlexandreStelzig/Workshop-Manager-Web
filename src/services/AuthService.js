@@ -8,22 +8,26 @@ export default class AuthService extends Component {
     return JSON.parse(isLoggedIn);
   }
 
-  static validateLogin(){
-	fetch('/api/login', {
-	  method: 'POST',
-	  headers: {
-	    'Accept': 'application/json',
-	    'Content-Type': 'application/json',
-	  },
-	  body: JSON.stringify({
-	    userName: 'yourValue',
-	    password: 'yourOtherValue',
-	  })
-	})
+  static validateLogin() {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userName: 'user',
+        password: 'user',
+      }),
+    }).then((res) => {
+      if (res) {
+        localStorage.setItem('isLoggedIn', true);
+      }
+    });
   }
 
-  static setIsLoggedIn(isLoggedIn) {
+  static logout() {
     // setter
-    localStorage.setItem('isLoggedIn', isLoggedIn);
+    localStorage.setItem('isLoggedIn', false);
   }
 }

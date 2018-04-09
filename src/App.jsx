@@ -27,15 +27,14 @@ export default class App extends Component {
   }
 
   onLogout() {
-    AuthService.setIsLoggedIn(false);
+    AuthService.logout();
     this.setState({ isLoggedIn: false });
   }
 
   onLogin() {
-    // AuthService.setIsLoggedIn(true);
     AuthService.validateLogin();
-    // History.push('/');
-    // this.setState({ isLoggedIn: true });
+    History.push('/');
+    this.setState({ isLoggedIn: true });
   }
 
   render() {
