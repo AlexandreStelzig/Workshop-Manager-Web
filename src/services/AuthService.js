@@ -8,8 +8,8 @@ export default class AuthService extends Component {
     return JSON.parse(isLoggedIn);
   }
 
-  static validateLogin(providedUserName, providedPassword) {
-    return fetch('/api/login', {
+  static validateCredentials(providedUserName, providedPassword) {
+    return fetch('/api/validatecredentials', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -24,8 +24,8 @@ export default class AuthService extends Component {
         data: data,
         status: response.status,
       })).then(res => {
-    	return(res.data);
-	}));
+        return(res.data);
+     }));
   }
 
   static logout() {

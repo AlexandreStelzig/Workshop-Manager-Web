@@ -17,15 +17,12 @@ export default class LoginPage extends Component {
 
   handleChange(event) {
     this.setState({
-      [event.target.id]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   }
 
   submitLogin(event) {
-    const username = this.state.username;
-    const password = this.state.password;
-
-    this.props.onLogin(username, password);
+    this.props.onLogin(this.state.username, this.state.password);
   }
 
   render() {
@@ -33,10 +30,10 @@ export default class LoginPage extends Component {
       <div className="LoginContainer">
         <h1>Login</h1>
         <div className="form-group">
-          <input id="username" type="text" className="form-control" placeholder="Username" onChange={this.handleChange} />
+          <input name="username" type="text" className="form-control" placeholder="Username" onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input id="password" type="password" className="form-control" placeholder="Password" onChange={this.handleChange} />
+          <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.handleChange} />
         </div>
         <div className="form-group text-center">
           <label htmlFor="remember">

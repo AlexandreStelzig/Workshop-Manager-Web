@@ -32,13 +32,14 @@ export default class App extends Component {
   }
 
   onLogin(username, password) {
-    AuthService.validateLogin(username, password).then(successful => {
-      if(successful){
+    AuthService.validateCredentials(username, password).then(successful => {
+      if (successful) {
         AuthService.login();
         History.push('/');
         this.setState({ isLoggedIn: true });
-      }else{
+      } else {
         // wrong username or password
+        alert("wrong username or password");
       }
     });
   }
