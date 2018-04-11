@@ -21,7 +21,7 @@ export default class LoginPage extends Component {
     });
   }
 
-  submitLogin(event) {
+  submitLogin() {
     this.props.onLogin(this.state.username, this.state.password);
   }
 

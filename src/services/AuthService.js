@@ -20,12 +20,11 @@ export default class AuthService extends Component {
         password: providedPassword,
       }),
     }).then(response =>
-      response.json().then(data => ({
-        data: data,
+      response.json().then(dataReceived => ({
+        data: dataReceived,
         status: response.status,
-      })).then(res => {
-        return(res.data);
-     }));
+      })).then(res =>
+        (res.data)));
   }
 
   static logout() {
@@ -33,7 +32,7 @@ export default class AuthService extends Component {
     localStorage.setItem('isLoggedIn', false);
   }
 
-  static login(){
-  	localStorage.setItem('isLoggedIn', true);
+  static login() {
+    localStorage.setItem('isLoggedIn', true);
   }
 }
