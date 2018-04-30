@@ -27,14 +27,24 @@ export default class App extends Component {
   }
 
   onLogout() {
-    AuthService.setIsLoggedIn(false);
+    AuthService.logout();
     this.setState({ isLoggedIn: false });
   }
 
-  onLogin() {
-    AuthService.setIsLoggedIn(true);
-    History.push('/');
-    this.setState({ isLoggedIn: true });
+  onLogin(username, password) {
+    AuthService.validateCredentials(username, password).then((successful) => {
+      if (successful) {
+        AuthService.login();
+        History.push('/');
+        this.setState({ isLoggedIn: true });
+      } else {
+        // wrong username or password - alert is temporary
+        alert('wrong username or password');
+      }
+    }).catch((error) => {
+      // not connected to server - temp for now
+      alert(error);
+    });
   }
 
   render() {
