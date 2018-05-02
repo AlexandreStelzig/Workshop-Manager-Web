@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -18,7 +19,7 @@ function numberValidator(value) {
   return true;
 }
 
-export default class RegistrationTeacherInformation extends Component {
+export default class TeacherInformation extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.formValues;
@@ -94,3 +95,10 @@ export default class RegistrationTeacherInformation extends Component {
     );
   }
 }
+
+TeacherInformation.propTypes = {
+  formValues: PropTypes.object.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  handleBack: PropTypes.func.isRequired,
+  saveValues: PropTypes.func.isRequired,
+};

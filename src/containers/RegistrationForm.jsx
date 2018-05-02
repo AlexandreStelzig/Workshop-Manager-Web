@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
-import RegistrationGeneralInformation from '../components/registration-information/RegistrationGeneralInfomation';
-import RegistrationTeacherInformation from '../components/registration-information/RegistrationTeacherInfomation';
-import RegistrationWorkshopInformation from '../components/registration-information/RegistrationWorkshopInfomation';
+import PropTypes from 'prop-types';
+import GeneralInformation from '../components/registrationInformation/GeneralInfomation';
+import TeacherInformation from '../components/registrationInformation/TeacherInfomation';
+import WorkshopInformation from '../components/registrationInformation/WorkshopInfomation';
 
 let formValues = {
   contactFirstName: '',
@@ -35,10 +35,6 @@ let formValues = {
   alternateDate: '',
 };
 
-function saveValues(fields) {
-  formValues = Object.assign({}, formValues, fields);
-}
-
 export default class RegistrationForm extends Component {
   constructor(props) {
     super(props);
@@ -47,63 +43,66 @@ export default class RegistrationForm extends Component {
     };
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.saveValues = this.saveValues.bind(this);
   }
 
   handleNext() {
     this.setState({ pageKey: this.state.pageKey + 1 });
   }
-
   handleBack() {
     this.setState({ pageKey: this.state.pageKey - 1 });
-  }
-
-  // Temporary submit function
-  handleSubmit() { // eslint-disable-line
-    alert('Form submitted!'); // eslint-disable-line
-  }
-
-  saveValues(fields) {
-    formValues = Object.assign({}, formValues, fields);
   }
 
   render() {
     switch (this.state.pageKey) {
       case 1:
         return (
-          <RegistrationGeneralInformation
+          <GeneralInformation
             formValues={formValues}
             handleNext={this.handleNext}
-            saveValues={saveValues}
+            saveValues={this.props.saveValues}
           />
         );
       case 2:
         return (
-          <RegistrationTeacherInformation
+          <TeacherInformation
             formValues={formValues}
             handleNext={this.handleNext}
             handleBack={this.handleBack}
-            saveValues={saveValues}
+            saveValues={this.props.saveValues}
           />
         );
       case 3:
         return (
-          <RegistrationWorkshopInformation
+          <WorkshopInformation
             formValues={formValues}
-            handleSubmit={this.handleSubmit}
+            handleSubmit={this.props.handleSubmit}
             handleBack={this.handleBack}
-            saveValues={saveValues}
+            saveValues={this.props.saveValues}
           />
         );
       default:
         return (
-          <RegistrationGeneralInformation
+          <GeneralInformation
             formValues={formValues}
             handleNext={this.handleNext}
-            saveValues={this.saveValues}
+            saveValues={this.props.saveValues}
           />
         );
     }
   }
 }
+
+RegistrationForm.propTypes = {
+  saveValues: PropTypes.func,
+  handleSubmit: PropTypes.func,
+};
+
+RegistrationForm.defaultProps = {
+  saveValues: function saveValues(fields) {
+    formValues = Object.assign({}, formValues, fields);
+  },
+  // Temporary submit function
+  handleSubmit: function handleSubmit() { // eslint-disable-line
+    alert('Form submitted!'); // eslint-disable-line
+  },
+};

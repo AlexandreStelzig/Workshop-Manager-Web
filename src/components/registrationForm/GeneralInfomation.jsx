@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { FormGroup, FormControl, ControlLabel, Grid, Row, Col, Tabs, Tab, Button } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
@@ -10,7 +11,7 @@ const selectRow = {
   mode: 'radio',
 };
 
-export default class RegistrationGeneralInformation extends Component {
+export default class GeneralInformation extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.formValues;
@@ -416,3 +417,9 @@ export default class RegistrationGeneralInformation extends Component {
     );
   }
 }
+
+GeneralInformation.propTypes = {
+  formValues: PropTypes.object.isRequired,
+  handleNext: PropTypes.func.isRequired,
+  saveValues: PropTypes.func.isRequired,
+};
