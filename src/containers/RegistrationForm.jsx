@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import GeneralInformation from '../components/registrationInformation/GeneralInfomation';
-import TeacherInformation from '../components/registrationInformation/TeacherInfomation';
-import WorkshopInformation from '../components/registrationInformation/WorkshopInfomation';
+import GeneralInformation from '../components/registrationForm/GeneralInfomation';
+import TeacherInformation from '../components/registrationForm/TeacherInfomation';
+import WorkshopInformation from '../components/registrationForm/WorkshopInfomation';
 
 let formValues = {
   contactFirstName: '',
