@@ -3,6 +3,9 @@
     "rules": {
     	"max-len": 0,
     	"no-plusplus": 0,
-        "react/forbid-prop-types": "off",
+        "react/forbid-prop-types": "off"
+    },
+    "globals": {
+        "fetch": false
     }
 }
