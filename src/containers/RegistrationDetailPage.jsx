@@ -1,6 +1,7 @@
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import LabelEdit from '../components/editors/LabelEdit';
 
 const registration = [
   {
@@ -115,7 +116,7 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Name: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].name}
+              <LabelEdit text={registration[0].name}/>
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Type: </label>
