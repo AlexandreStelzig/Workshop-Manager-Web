@@ -38,6 +38,12 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     historyApiFallback: true,
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' },
+      },
+    },
   },
   plugins: [
     new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
