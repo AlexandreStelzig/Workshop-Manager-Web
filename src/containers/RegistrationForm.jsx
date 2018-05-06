@@ -4,37 +4,6 @@ import GeneralInformation from '../components/registrationForm/GeneralInfomation
 import TeacherInformation from '../components/registrationForm/TeacherInfomation';
 import WorkshopInformation from '../components/registrationForm/WorkshopInfomation';
 
-let formValues = {
-  contactFirstName: '',
-  contactLastName: '',
-  contactEmail: '',
-  contactPhone: '',
-  groupKey: 1,
-  groupName: '',
-  schoolBoard: '',
-  language: 'English',
-  schoolType: 'Elementary',
-  address: '',
-  city: '',
-  region: 'Ottawa-Gatineau',
-  province: 'Ontario',
-  postalCode: '',
-  orgPhone: '',
-  schoolFax: '',
-  schoolAudience: 'General Youth',
-  schoolSchedule: [],
-  teachers: [],
-  selectWorkshop: -1,
-  registeredWorkshops: [],
-  selectedDescription: 'Select a workshop using the dropdown list above.',
-  selectedName: 'Select workshop',
-  comments: '',
-  autogenId: 0,
-  workshopLocation: 'Your location',
-  preferredDate: '',
-  alternateDate: '',
-};
-
 export default class RegistrationForm extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +12,38 @@ export default class RegistrationForm extends Component {
     };
     this.handleNext = this.handleNext.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.formValues = {
+      contactFirstName: '',
+      contactLastName: '',
+      contactEmail: '',
+      contactPhone: '',
+      groupKey: 1,
+      groupName: '',
+      schoolBoard: '',
+      language: 'English',
+      schoolType: 'Elementary',
+      address: '',
+      city: '',
+      region: 'Ottawa-Gatineau',
+      province: 'Ontario',
+      postalCode: '',
+      orgPhone: '',
+      schoolFax: '',
+      schoolAudience: 'General Youth',
+      schoolSchedule: [],
+      teachers: [],
+      selectWorkshop: -1,
+      registeredWorkshops: [],
+      selectedDescription: 'Select a workshop using the dropdown list above.',
+      selectedName: 'Select workshop',
+      comments: '',
+      autogenId: 0,
+      workshopLocation: 'Your location',
+      preferredDate: '',
+      alternateDate: '',
+    };
+    this.saveValues = this.saveValues.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNext() {
@@ -52,57 +53,50 @@ export default class RegistrationForm extends Component {
     this.setState({ pageKey: this.state.pageKey - 1 });
   }
 
+  saveValues(fields) {
+    this.formValues = Object.assign({}, this.formValues, fields);
+  }
+  // Temporary submit function
+  handleSubmit() { // eslint-disable-line
+    alert('Form submitted!'); // eslint-disable-line
+  }
+
   render() {
     switch (this.state.pageKey) {
       case 1:
         return (
           <GeneralInformation
-            formValues={formValues}
+            formValues={this.formValues}
             handleNext={this.handleNext}
-            saveValues={this.props.saveValues}
+            saveValues={this.saveValues}
           />
         );
       case 2:
         return (
           <TeacherInformation
-            formValues={formValues}
+            formValues={this.formValues}
             handleNext={this.handleNext}
             handleBack={this.handleBack}
-            saveValues={this.props.saveValues}
+            saveValues={this.saveValues}
           />
         );
       case 3:
         return (
           <WorkshopInformation
-            formValues={formValues}
-            handleSubmit={this.props.handleSubmit}
+            formValues={this.formValues}
+            handleSubmit={this.handleSubmit}
             handleBack={this.handleBack}
-            saveValues={this.props.saveValues}
+            saveValues={this.saveValues}
           />
         );
       default:
         return (
           <GeneralInformation
-            formValues={formValues}
+            formValues={this.formValues}
             handleNext={this.handleNext}
-            saveValues={this.props.saveValues}
+            saveValues={this.saveValues}
           />
         );
     }
   }
 }
-
-RegistrationForm.propTypes = {
-  saveValues: PropTypes.func,
-  handleSubmit: PropTypes.func,
-};
-
-RegistrationForm.defaultProps = {
-  saveValues: function saveValues(fields) {
-    formValues = Object.assign({}, formValues, fields);
-  },
-  // Temporary submit function
-  handleSubmit: function handleSubmit() { // eslint-disable-line
-    alert('Form submitted!'); // eslint-disable-line
-  },
-};

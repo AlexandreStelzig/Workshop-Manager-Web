@@ -2,8 +2,7 @@
     "extends": "airbnb",
     "rules": {
     	"max-len": 0,
-    	"no-plusplus": 0,
-        "react/forbid-prop-types": "off"
+    	"no-plusplus": 0
     },
     "globals": {
         "fetch": false
