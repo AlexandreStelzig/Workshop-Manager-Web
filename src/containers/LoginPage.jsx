@@ -3,11 +3,26 @@ import PropTypes from 'prop-types';
 import './Login.css';
 
 export default class LoginPage extends Component {
-  click() {
-    const username = this.textbox.value;
-    const password = this.textbox.value;
+  constructor(props) {
+    super(props);
 
-    this.props.onLogin(username, password);
+    this.state = {
+      username: '',
+      password: '',
+    };
+
+    this.submitLogin = this.submitLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  submitLogin() {
+    this.props.onLogin(this.state.username, this.state.password);
   }
 
   render() {
@@ -15,10 +30,10 @@ export default class LoginPage extends Component {
       <div className="LoginContainer">
         <h1>Login</h1>
         <div className="form-group">
-          <input type="text" className="form-control" placeholder="Username" />
+          <input name="username" type="text" className="form-control" placeholder="Username" onChange={this.handleChange} />
         </div>
         <div className="form-group">
-          <input type="password" className="form-control" placeholder="Password" />
+          <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.handleChange} />
         </div>
         <div className="form-group text-center">
           <label htmlFor="remember">
@@ -29,7 +44,7 @@ export default class LoginPage extends Component {
         <div className="form-group">
           <div className="row">
             <div className="col-sm-6 col-sm-offset-3">
-              <button className="form-control btn btn-primary" onClick={this.props.onLogin}>
+              <button className="form-control btn btn-primary" onClick={this.submitLogin}>
                 Log in
               </button>
             </div>

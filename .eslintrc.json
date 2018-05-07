@@ -3,5 +3,8 @@
     "rules": {
     	"max-len": 0,
     	"no-plusplus": 0
+    },
+    "globals": {
+        "fetch": false
     }
 }
