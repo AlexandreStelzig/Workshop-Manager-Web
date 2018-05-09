@@ -4,7 +4,7 @@
   "description": "The Web portion of the Event Manager for the SEG4910 Capstone Project.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --require test/testHelper.js",
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "webpack --config ./webpack.prod.js --mode production"
   },
@@ -27,7 +27,11 @@
   "homepage": "https://github.com/AlexandreStelzig/Event-Manager-Web#readme",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "chai": "^4.1.2",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "history": "^4.7.2",
+    "jsdom": "^11.6.2",
     "moment": "^2.21.0",
     "offline-plugin": "^4.9.0",
     "prop-types": "^15.6.1",
@@ -54,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
+    "mocha": "^5.1.1",
     "open-browser-webpack-plugin": "0.0.5",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
