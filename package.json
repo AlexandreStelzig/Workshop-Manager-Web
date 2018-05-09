@@ -58,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "file-loader": "^1.1.11",
+    "mocha": "^5.1.1",
     "open-browser-webpack-plugin": "0.0.5",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.4",
