@@ -8,9 +8,9 @@ export default class AuthService extends BaseService {
     return JSON.parse(isLoggedIn);
   }
 
-  static validateCredentials(providedUserName, providedPassword) {
-    return super.post('validatecredentials', {
-      userName: providedUserName,
+  static validateCredentials(providedUsername, providedPassword) {
+    return super.post('auth/validatecredentials', {
+      username: providedUsername,
       password: providedPassword,
     }).then(res => res.data);
   }
