@@ -17,4 +17,19 @@ export default class BaseService {
         status: response.status,
       })));
   }
+
+  static get(methodName, body) {
+    return fetch(`/${this.urlSubName}/${methodName}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: undefined,
+    }).then(response =>
+      response.json().then(dataReceived => ({
+        data: dataReceived,
+        status: response.status,
+      })));
+  }
 }
