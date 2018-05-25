@@ -1,4 +1,3 @@
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import LabelEdit from '../components/editors/LabelEdit';
@@ -116,13 +115,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Name: </label>
             </div>
             <div className="col-md-3">
-              <LabelEdit text={registration[0].name}/>
+              <LabelEdit value={registration[0].name} type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Type: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].type}
+              <LabelEdit value={registration[0].type} type="text" />
             </div>
           </div>
           <div className="row">
@@ -130,13 +129,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Board: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].board}
+              <LabelEdit value={registration[0].board} type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Language: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].language}
+              <LabelEdit value={registration[0].language} type="text" />
             </div>
           </div>
           <div className="row">
@@ -144,13 +143,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Adresse: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].adresse}
+              <LabelEdit value={registration[0].adresse} type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Province: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].province}
+              <LabelEdit value={registration[0].province} type="text" />
             </div>
           </div>
           <div className="row">
@@ -158,13 +157,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">City: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].city}
+              <LabelEdit value={registration[0].city} />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Postal: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].postal}
+              <LabelEdit value={registration[0].postal} type="text" />
             </div>
           </div>
         </section>
@@ -175,7 +174,7 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Name: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].contactName}
+              <LabelEdit value={registration[0].contactName} type="text" />
             </div>
             <div className="col-md-1" />
           </div>
@@ -184,13 +183,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Phone: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].contactPhone}
+              <LabelEdit value={registration[0].contactPhone} type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">Email: </label>
             </div>
             <div className="col-md-3">
-              {registration[0].contactEmail}
+              <LabelEdit value={registration[0].contactEmail} type="text" />
             </div>
           </div>
         </section>
@@ -204,7 +203,7 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Date: </label>
             </div>
             <div className="col-md-3">
-              12 September 2018
+              <LabelEdit value="12 September 2018" type="text" />
             </div>
             <div className="col-md-4">
               <button type="button" className="btn btn-primary">Show in calendar</button>
@@ -215,13 +214,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Start: </label>
             </div>
             <div className="col-md-3">
-              7:30 am
+              <LabelEdit value="7:30 am" type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">End: </label>
             </div>
             <div className="col-md-3">
-              5:00 pm
+              <LabelEdit value="5:00 pm" type="text" />
             </div>
           </div>
           <div className="row">
@@ -237,23 +236,15 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Transport: </label>
             </div>
             <div className="col-md-3">
-              <FormGroup controlId="formControlsSelect">
-                <ControlLabel>Filter by statuses</ControlLabel>
-                <FormControl
-                  onChange={this.onSelectChange}
-                  inputRef={(inputStatus) => { this.inputStatus = inputStatus; }}
-                  componentClass="select"
-                  placeholder="select"
-                >
-                  <option value="0">Not selected</option>
-                  <option value="1">Van 1</option>
-                  <option value="2">Van 2</option>
-                  <option value="3">Van 3</option>
-                  <option value="4">Van 4</option>
-                  <option value="5">Van 5</option>
-                  <option value="6">On Campus</option>
-                </FormControl>
-              </FormGroup>
+              <select className="selectpicker form-control">
+                <option value="0">Not selected</option>
+                <option value="1">Van 1</option>
+                <option value="2">Van 2</option>
+                <option value="3">Van 3</option>
+                <option value="4">Van 4</option>
+                <option value="5">Van 5</option>
+                <option value="6">On Campus</option>
+              </select>
             </div>
           </div>
         </section>
@@ -287,7 +278,7 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Date: </label>
             </div>
             <div className="col-md-3">
-              12 September 2018
+              <LabelEdit value="12 September 2018" type="text" />
             </div>
             <div className="col-md-4">
               <button type="button" className="btn btn-primary">Show in calendar</button>
@@ -298,13 +289,13 @@ export default class RegistrationDetailPage extends Component {
               <label className="control-label float-right">Start: </label>
             </div>
             <div className="col-md-3">
-              7:30 am
+              <LabelEdit value="7:30 am" type="text" />
             </div>
             <div className="col-md-1">
               <label className="control-label float-right">End: </label>
             </div>
             <div className="col-md-3">
-              5:00 pm
+              <LabelEdit value="5:00 pm" type="text" />
             </div>
           </div>
           <div className="row">
