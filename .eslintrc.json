@@ -2,7 +2,9 @@
     "extends": "airbnb",
     "rules": {
     	"max-len": 0,
-    	"no-plusplus": 0
+    	"no-plusplus": 0,
+    	"jsx-a11y/no-autofocus":0
+
     },
     "globals": {
         "fetch": false

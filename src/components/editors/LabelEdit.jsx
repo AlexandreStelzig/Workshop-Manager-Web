@@ -9,6 +9,10 @@ export default class LabelEdit extends Component {
       text: props.value,
       type: props.type,
     };
+    this.labelClicked = this.labelClicked.bind(this);
+    this.textChanged = this.textChanged.bind(this);
+    this.inputLostFocus = this.inputLostFocus.bind(this);
+    this.keyPressed = this.keyPressed.bind(this);
   }
 
   labelClicked() {
@@ -16,7 +20,7 @@ export default class LabelEdit extends Component {
   }
 
   textChanged() {
-    this.setState({ text: this.refs.textInput.value });
+    this.setState({ text: this.textInput.value });
   }
 
   inputLostFocus() {
@@ -34,35 +38,36 @@ export default class LabelEdit extends Component {
     let editingElement = '';
     if (this.state.editing) {
       switch (this.state.type) {
-        case 'text':
+        case 'date':
           editingElement = (<input
-            ref='textInput'
+            ref={(r) => { this.textInput = r; }}
             type="text"
             className="form-control"
-            onChange={this.textChanged.bind(this)}
-            onBlur={this.inputLostFocus.bind(this)}
-            onKeyPress={this.keyPressed.bind(this)}
+            onChange={this.textChanged}
+            onBlur={this.inputLostFocus}
+            onKeyPress={this.keyPressed}
             value={this.state.text}
             autoFocus
           />);
           break;
-        default:
+        default: // for the text
           editingElement = (<input
-            ref='textInput'
+            ref={(r) => { this.textInput = r; }}
             type="text"
             className="form-control"
-            onChange={this.textChanged.bind(this)}
-            onBlur={this.inputLostFocus.bind(this)}
-            onKeyPress={this.keyPressed.bind(this)}
+            onChange={this.textChanged}
+            onBlur={this.inputLostFocus}
+            onKeyPress={this.keyPressed}
             value={this.state.text}
             autoFocus
           />);
           break;
       }
     } else {
-      editingElement = (<p onClick={this.labelClicked.bind(this)}>
-        {this.state.text}
-      </p>);
+      editingElement = (
+        <div onClick={this.labelClicked}>
+          {this.state.text}
+        </div>);
     }
     return editingElement;
   }
@@ -71,5 +76,10 @@ export default class LabelEdit extends Component {
 LabelEdit.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
+};
+
+LabelEdit.defaultProps = {
+  type: 'text',
+  value: '',
 };
 
