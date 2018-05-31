@@ -7,7 +7,7 @@ The goal for this project is to create an open source event manager that can be 
 workshops as well as creating an easy-to-use registration form for the events.
 
 # Online Demo
-An online demo is available <a href="https://l.facebook.com/l.php?u=http%3A%2F%2Fworkshop-manager.s3-website.ca-central-1.amazonaws.com%2F&h=ATMmgVxRBpsnnocu5grsbVsXbAtR5MunIWuFBtnfFLXQZvlxQWt9Fhcq5g8QQ4MPb-8YOFF-oEcMIF5V8RhOb1NcrsjPmayPdLAPX6F6mawpbr8LeY9Juw">here</a>
+An online demo is available <a href="http://workshop-manager.s3-website.ca-central-1.amazonaws.com">here</a>
 
 
 The MIT License
