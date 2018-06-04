@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import UserService from '../services/UserService';
 
-const languageTypes = ['English', 'French', 'Bilingual'];
+const Languages = ['Français', 'English', 'Bilingual'];
 const userTypes = ['Instructor', 'Administrator', 'Super Administrator'];
 const licenseTypes = ['None', 'G', 'G2'];
 const statusTypes = ['Active', 'Inactive'];
@@ -21,6 +21,27 @@ const cellEditProp = {
   mode: 'click',
   blurToSave: true,
 };
+
+function onAfterInsertRow(row) {
+  // let newRowStr = '';
+
+  // for (const prop in row) {
+  //     newRowStr += prop + ': ' + row[prop] + ' \n';
+  // }
+  // console.log('The new row is:\n ' + newRowStr);
+  // console.log(row);
+    UserService.createUser(row).then((returnValue) => {
+      // users = returnedUsers;
+      // this.filterUsers();
+    }).catch((error) => {
+      alert(error);
+    });
+}
+
+const options = {
+  afterInsertRow: onAfterInsertRow   // A hook for after insert rows
+};
+
 
 export default class UsersPage extends Component {
   constructor(props) {
@@ -63,6 +84,7 @@ export default class UsersPage extends Component {
     this.filterUsers();
   }
 
+
   render() {
     return (
       <React.Fragment>
@@ -85,8 +107,9 @@ export default class UsersPage extends Component {
           insertRow
           cellEdit={cellEditProp}
           search
+          options={ options }
         >
-          <TableHeaderColumn dataField="userid" isKey hidden hiddenOnInsert searchable={false} autoValue>Idb</TableHeaderColumn>
+          <TableHeaderColumn dataField="userId" isKey hidden hiddenOnInsert searchable={false} autoValue>Idb</TableHeaderColumn>
           <TableHeaderColumn dataField="username" dataSort>User Name</TableHeaderColumn>
           <TableHeaderColumn dataField="password" dataSort hidden searchable={false}>Password</TableHeaderColumn>
           <TableHeaderColumn dataField="firstName" dataSort>Surname</TableHeaderColumn>
@@ -95,8 +118,8 @@ export default class UsersPage extends Component {
           <TableHeaderColumn dataField="telephone" dataSort>Telephone</TableHeaderColumn>
           <TableHeaderColumn dataField="dateOfBirth" dataSort>Date of Birth</TableHeaderColumn>
           <TableHeaderColumn dataField="userType" dataSort editable={{ type: 'select', options: { values: userTypes } }}>User Type</TableHeaderColumn>
-          <TableHeaderColumn dataField="language" dataSort editable={{ type: 'select', options: { values: languageTypes } }}>Language(s)</TableHeaderColumn>
-          <TableHeaderColumn dataField="license" dataSort editable={{ type: 'select', options: { values: licenseTypes } }}>Driver License</TableHeaderColumn>
+          <TableHeaderColumn dataField="language" dataSort editable={{ type: 'select', options: { values: Languages } }}>Language(s)</TableHeaderColumn>
+          <TableHeaderColumn dataField="driversLicense" dataSort editable={{ type: 'select', options: { values: licenseTypes } }}>Driver License</TableHeaderColumn>
           <TableHeaderColumn dataField="status" dataSort editable={{ type: 'select', options: { values: statusTypes } }}>Status</TableHeaderColumn>
         </BootstrapTable>
       </React.Fragment>
