@@ -52,7 +52,7 @@ export default class App extends Component {
       <Router history={History}>
         <React.Fragment>
           {this.state.isLoggedIn && <WorkshopMenu onLogout={this.onLogout} />}
-          <div className="content">
+          <div className="container content">
             <PrivateRoute exact path="/" component={RegistrationsPage} />
             <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
             <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
