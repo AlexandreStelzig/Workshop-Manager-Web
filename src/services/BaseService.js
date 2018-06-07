@@ -1,11 +1,12 @@
 export default class BaseService {
   static get urlSubName() {
-    return 'api';
+    return 'https://127.0.0.1:3000';
   }
 
-  static post(methodName, body) {
-    return fetch(`/${this.urlSubName}/${methodName}`, {
+  static async post(methodName, body) {
+    /*return fetch(`/${this.urlSubName}/${methodName}`, {
       method: 'POST',
+      mode: 'cors',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -16,5 +17,16 @@ export default class BaseService {
         data: dataReceived,
         status: response.status,
       })));
+  }*/
+    const rawResponse = await fetch(`/${this.urlSubName}/auth/validatecredentials`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: 'test', password: 'test'}),
+    });
+    console.log(rawResponse);
+    return true;
   }
 }

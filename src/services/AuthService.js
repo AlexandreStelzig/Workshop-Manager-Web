@@ -1,5 +1,7 @@
 /* global localStorage */
+import 'babel-polyfill';
 import BaseService from './BaseService';
+
 
 export default class AuthService extends BaseService {
   static getIsLoggedIn() {
@@ -12,7 +14,12 @@ export default class AuthService extends BaseService {
     return super.post('auth/validatecredentials', {
       username: providedUsername,
       password: providedPassword,
-    }).then(res => res.data);
+    }).then((res) => {
+      if (res.data.status === 'Success!') {
+        return true;
+      }
+      return false;
+    });
   }
 
   static logout() {
