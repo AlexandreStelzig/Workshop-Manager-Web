@@ -8,8 +8,6 @@ import App from './App';
 // OfflinePluginRuntime.install();
 
 ReactDOM.render(
-  <div className="container">
-    <App />
-  </div>,
+	<App />,
   document.getElementById('root'),
 );
