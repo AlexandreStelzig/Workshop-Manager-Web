@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Router, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import './App.css';
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import WorkshopMenu from './components/WorkshopMenu';
@@ -16,6 +17,14 @@ import RegistrationForm from './containers/RegistrationForm';
 import AuthService from './services/AuthService';
 import History from './utils/History';
 
+
+const DivBackground = styled.div`
+  background: linear-gradient(0.25turn, #01Addf, #ebf8e1, #ff9900);
+  height: inherit;
+`;
+const DivCentral = styled.div`
+  background-color: #FFF;
+`;
 
 export default class App extends Component {
   constructor() {
@@ -51,19 +60,21 @@ export default class App extends Component {
     return (
       <Router history={History}>
         <React.Fragment>
-          {this.state.isLoggedIn && <WorkshopMenu onLogout={this.onLogout} />}
-          <div className="container content">
-            <PrivateRoute exact path="/" component={RegistrationsPage} />
-            <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
-            <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
-            <PrivateRoute exact path="/registrationDetail" component={RegistrationDetailPage} />
-            <PrivateRoute exact path="/calendar" component={CalendarPage} />
-            <PrivateRoute exact path="/resources" component={ResourcesPage} />
-            <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
-            <PrivateRoute exact path="/users" component={UsersPage} />
-            <PrivateRoute exact path="/settings" component={SettingsPage} />
-            <PrivateRoute exact path="/register" component={RegistrationForm} />
-          </div>
+          <DivBackground>
+            {this.state.isLoggedIn && <WorkshopMenu onLogout={this.onLogout} />}
+            <DivCentral className="container content">
+              <PrivateRoute exact path="/" component={RegistrationsPage} />
+              <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
+              <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
+              <PrivateRoute exact path="/registrationDetail" component={RegistrationDetailPage} />
+              <PrivateRoute exact path="/calendar" component={CalendarPage} />
+              <PrivateRoute exact path="/resources" component={ResourcesPage} />
+              <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
+              <PrivateRoute exact path="/users" component={UsersPage} />
+              <PrivateRoute exact path="/settings" component={SettingsPage} />
+              <PrivateRoute exact path="/register" component={RegistrationForm} />
+            </DivCentral>
+          </DivBackground>
         </React.Fragment>
       </Router>
     );
