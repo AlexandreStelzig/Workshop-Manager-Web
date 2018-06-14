@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GeneralInformation from '../components/registrationForm/GeneralInfomation';
 import TeacherInformation from '../components/registrationForm/TeacherInfomation';
 import WorkshopInformation from '../components/registrationForm/WorkshopInfomation';
+import RegistrationService from '../services/RegistrationService';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -58,7 +59,8 @@ export default class RegistrationForm extends Component {
   }
   // Temporary submit function
   handleSubmit() { // eslint-disable-line
-    alert('Form submitted!'); // eslint-disable-line
+    console.log(this.formValues);
+    RegistrationService.submitRegistration(this.formValues);
   }
 
   render() {
