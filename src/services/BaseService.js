@@ -6,6 +6,7 @@ export default class BaseService {
   static post(methodName, body) {
     return fetch(`/${this.urlSubName}/${methodName}`, {
       method: 'POST',
+      mode: 'cors',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
