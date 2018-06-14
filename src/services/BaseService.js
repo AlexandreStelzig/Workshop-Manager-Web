@@ -3,7 +3,7 @@ export default class BaseService {
     return 'api';
   }
 
-  static async post(methodName, body) {
+  static post(methodName, body) {
     return fetch(`/${this.urlSubName}/${methodName}`, {
       method: 'POST',
       mode: 'cors',
@@ -17,16 +17,5 @@ export default class BaseService {
         data: dataReceived,
         status: response.status,
       })));
-
-    /* const rawResponse = await fetch(`/${this.urlSubName}/auth/validatecredentials`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: 'test', password: 'test'}),
-    });
-    console.log(rawResponse);
-    return true; */
   }
 }
