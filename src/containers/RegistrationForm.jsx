@@ -18,7 +18,7 @@ export default class RegistrationForm extends Component {
       contactLastName: '',
       contactEmail: '',
       contactPhone: '',
-      groupKey: 1,
+      groupType: 'School',
       groupName: '',
       schoolBoard: '',
       language: 'English',
