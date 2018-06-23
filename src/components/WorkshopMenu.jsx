@@ -5,7 +5,7 @@ import { Navbar, Nav, NavItem, FormControl, DropdownButton, NavDropdown, MenuIte
 import { LinkContainer } from 'react-router-bootstrap';
 
 const WorkshopMenu = ({ onLogout }) => (
-  <Navbar fluid inverse collapseOnSelect>
+  <Navbar fluid inverse staticTop collapseOnSelect>
     <div className="container">
       <Navbar.Header>
         <Navbar.Brand>

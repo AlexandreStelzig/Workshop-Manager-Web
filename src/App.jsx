@@ -20,7 +20,9 @@ import History from './utils/History';
 
 const DivBackground = styled.div`
   background: linear-gradient(0.25turn, #01Addf, #ebf8e1, #ff9900);
-  height: inherit;
+  min-height: 100%;
+  padding-bottom: 50px;
+
 `;
 const DivCentral = styled.div`
   background-color: #FFF;
