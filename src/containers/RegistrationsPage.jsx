@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton, Button, Badge } from 'react-bootstrap';
 
 const registrations = [
   {
@@ -87,7 +87,7 @@ export default class RegistrationsPage extends Component {
         this.setState({ redirect: true });
       },
     };
-    const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} ({a.count})</ToggleButton>);
+    const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
     }
@@ -101,13 +101,13 @@ export default class RegistrationsPage extends Component {
           <div className="col-md-3">
           100 out of 400
           </div>
+          <div className="col-md-3">
+          100 out of 400
+          </div>
           <div className="col-md-9">
             <div className="progress">
               <div className="progress-bar" role="progressbar" style={progBar} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" />
             </div>
-          </div>
-          <div className="col-md-3">
-          100 out of 400
           </div>
           <div className="col-md-9">
             <div className="progress">

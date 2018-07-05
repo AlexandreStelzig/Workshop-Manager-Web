@@ -30,7 +30,7 @@ export default class GeneralInformation extends Component {
   }
 
   handleSelect(newKey) {
-    this.setState({ groupKey: newKey });
+    this.setState({ groupType: newKey });
   }
 
   render() {
@@ -106,11 +106,11 @@ export default class GeneralInformation extends Component {
           <Row>
             <Col>
               <Tabs
-                activeKey={this.state.groupKey}
+                activeKey={this.state.groupType}
                 onSelect={this.handleSelect}
                 id="groupTab"
               >
-                <Tab eventKey={1} title="School">
+                <Tab eventKey="School" title="School">
                   <Row>
                     <Col md={6}>
                       <ControlLabel>School board</ControlLabel>
@@ -294,7 +294,7 @@ export default class GeneralInformation extends Component {
                     </Col>
                   </Row>
                 </Tab>
-                <Tab eventKey={2} title="Group">
+                <Tab eventKey="Group" title="Group">
                   <Row>
                     <Col md={6}>
                       <ControlLabel>Group name</ControlLabel>
