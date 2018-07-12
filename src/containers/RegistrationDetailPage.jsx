@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import styled from 'styled-components';
 import LabelEdit from '../components/editors/LabelEdit';
+import RegistrationService from '../services/RegistrationService';
 
 const registration = [
   {
@@ -104,8 +105,15 @@ function quantityValidator(value) {
 export default class RegistrationDetailPage extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { registration: registration[0] };
   }
+
+  componentDidMount() {
+    RegistrationService.getRegistration(11).then((reg) => {
+      this.state.registration = reg;
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -120,13 +128,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Name: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].name} type="text" />
+              <LabelEdit value={this.state.registration.name} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Type: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].type} type="text" />
+              <LabelEdit value={this.state.registration.type} type="text" />
             </div>
           </div>
           <div className="row">
@@ -134,13 +142,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Board: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].board} type="text" />
+              <LabelEdit value={this.state.registration.board} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Language: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].language} type="text" />
+              <LabelEdit value={this.state.registration.language} type="text" />
             </div>
           </div>
           <div className="row">
@@ -148,13 +156,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].adresse} type="text" />
+              <LabelEdit value={this.state.registration.adresse} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Province: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].province} type="text" />
+              <LabelEdit value={this.state.registration.province} type="text" />
             </div>
           </div>
           <div className="row">
@@ -162,13 +170,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">City: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].city} />
+              <LabelEdit value={this.state.registration.city} />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Postal: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].postal} type="text" />
+              <LabelEdit value={this.state.registration.postal} type="text" />
             </div>
           </div>
         </section>
@@ -179,7 +187,7 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Name: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].contactName} type="text" />
+              <LabelEdit value={this.state.registration.contactName} type="text" />
             </div>
             <div className="col-md-1" />
           </div>
@@ -188,13 +196,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Phone: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].contactPhone} type="text" />
+              <LabelEdit value={this.state.registration.contactPhone} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Email: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={registration[0].contactEmail} type="text" />
+              <LabelEdit value={this.state.registration.contactEmail} type="text" />
             </div>
           </div>
         </section>
@@ -233,9 +241,9 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              {registration[0].adresse}
-              {registration[0].province}
-              {registration[0].postal}
+              {this.state.registration.adresse}
+              {this.state.registration.province}
+              {this.state.registration.postal}
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Transport: </BoldDiv>
@@ -308,9 +316,9 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              {registration[0].adresse}
-              {registration[0].province}
-              {registration[0].postal}
+              {this.state.registration.adresse}
+              {this.state.registration.province}
+              {this.state.registration.postal}
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Transport: </BoldDiv>
