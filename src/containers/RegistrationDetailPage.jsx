@@ -105,13 +105,18 @@ function quantityValidator(value) {
 export default class RegistrationDetailPage extends Component {
   constructor() {
     super();
-    this.state = { registration: registration[0] };
+    this.state = { registration: {} };
+    this.textChange = this.textChange.bind(this);
   }
 
   componentDidMount() {
     RegistrationService.getRegistration(11).then((reg) => {
-      this.state.registration = reg;
+      this.setState({ registration: reg });
     });
+  }
+
+  textChange(e) {
+    this.setState({ registration: { ...this.state.registration, [e.target.name]: e.target.value } });
   }
 
   render() {
@@ -128,13 +133,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Name: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.name} type="text" />
+              <LabelEdit value={this.state.registration.name} type="text" name="name" onValueChange={this.textChange} />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Type: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.type} type="text" />
+              <LabelEdit value={this.state.registration.type} name="type" onValueChange={this.textChange} type="text" />
             </div>
           </div>
           <div className="row">
@@ -142,13 +147,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Board: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.board} type="text" />
+              <LabelEdit value={this.state.registration.board} name="board" onValueChange={this.textChange} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Language: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.language} type="text" />
+              <LabelEdit value={this.state.registration.language} name="language" onValueChange={this.textChange} type="text" />
             </div>
           </div>
           <div className="row">
@@ -156,13 +161,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.adresse} type="text" />
+              <LabelEdit value={this.state.registration.adresse} name="adresse" onValueChange={this.textChange} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Province: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.province} type="text" />
+              <LabelEdit value={this.state.registration.province} name="province" onValueChange={this.textChange} type="text" />
             </div>
           </div>
           <div className="row">
@@ -170,13 +175,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">City: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.city} />
+              <LabelEdit value={this.state.registration.city} name="city" onValueChange={this.textChange} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Postal: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.postal} type="text" />
+              <LabelEdit value={this.state.registration.postal} name="postal" onValueChange={this.textChange} type="text" />
             </div>
           </div>
         </section>
@@ -187,7 +192,7 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Name: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactName} type="text" />
+              <LabelEdit value={this.state.registration.contactFirstName} name="contactFirstName" onValueChange={this.textChange} type="text" />
             </div>
             <div className="col-md-1" />
           </div>
@@ -196,13 +201,13 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Phone: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactPhone} type="text" />
+              <LabelEdit value={this.state.registration.contactPhone} name="contactPhone" onValueChange={this.textChange} type="text" />
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Email: </BoldDiv>
             </div>
             <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactEmail} type="text" />
+              <LabelEdit value={this.state.registration.contactEmail} name="contactEmail" onValueChange={this.textChange} type="text" />
             </div>
           </div>
         </section>
