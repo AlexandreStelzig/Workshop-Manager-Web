@@ -119,98 +119,60 @@ export default class RegistrationDetailPage extends Component {
     this.setState({ registration: { ...this.state.registration, [e.target.name]: e.target.value } });
   }
 
+  renderRow(label1, name1, label2, name2) {
+    return (
+      <div className="row">
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label1}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={this.state.registration[name1]} type="text" name={name1} onValueChange={this.textChange} />
+        </div>
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label2}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={this.state.registration[name2]} type="text" name={name2} onValueChange={this.textChange} />
+        </div>
+      </div>
+    );
+  }
+
+  renderSchool() {
+    return (
+      <React.Fragment>
+        <h3>School Informations </h3>
+        <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
+        <section>
+          {this.renderRow('Name', 'name', 'Type', 'groupType')}
+          {this.renderRow('Board', 'board', 'Language', 'language')}
+          {this.renderRow('Adresse', 'adresse', 'Province', 'province')}
+          {this.renderRow('City', 'city', 'Postal', 'postal')}
+        </section>
+      </React.Fragment>
+    );
+  }
+
+  renderContact() {
+    return (
+      <React.Fragment>
+        <h3>Contact Informations</h3>
+        <section>
+          {this.renderRow('First Name', 'contactFirstName', 'Last Name', 'contactLastName')}
+          {this.renderRow('Phone', 'contactTelephone', 'Email', 'contactEmail')}
+        </section>
+      </React.Fragment>
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
         <div>
           <h1>Registration Detail</h1>
         </div>
-        <h3>School Informations </h3>
-        <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
-        <section>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Name: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.name} type="text" name="name" onValueChange={this.textChange} />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Type: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.type} name="type" onValueChange={this.textChange} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Board: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.board} name="board" onValueChange={this.textChange} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Language: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.language} name="language" onValueChange={this.textChange} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.adresse} name="adresse" onValueChange={this.textChange} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Province: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.province} name="province" onValueChange={this.textChange} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">City: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.city} name="city" onValueChange={this.textChange} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Postal: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.postal} name="postal" onValueChange={this.textChange} type="text" />
-            </div>
-          </div>
-        </section>
-        <h3>Contact Informations</h3>
-        <section>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Name: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactFirstName} name="contactFirstName" onValueChange={this.textChange} type="text" />
-            </div>
-            <div className="col-md-1" />
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Phone: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactPhone} name="contactPhone" onValueChange={this.textChange} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Email: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={this.state.registration.contactEmail} name="contactEmail" onValueChange={this.textChange} type="text" />
-            </div>
-          </div>
-        </section>
+        {this.renderSchool()}
+        {this.renderContact()}
         <h3>Status Informations</h3>
         <p>This information comes from another system</p>
         <h3>Workshops</h3>
