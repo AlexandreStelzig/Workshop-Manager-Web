@@ -1,10 +1,15 @@
 export default class BaseService {
-  static get urlSubName() {
-    return 'api';
+  static get urlBaseName() {
+    if (process.env.NODE_ENV === 'development') {
+      return '/api';
+    } else if (process.env.NODE_ENV === 'production') {
+      return 'http://workshopmangernodejs-env.m6p9w3tdrq.ca-central-1.elasticbeanstalk.com';
+    }
+    return '';
   }
 
   static post(methodName, body) {
-    return fetch(`/${this.urlSubName}/${methodName}`, {
+    return fetch(`${this.urlBaseName}/${methodName}`, {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -18,7 +23,6 @@ export default class BaseService {
         status: response.status,
       })));
   }
-
 
   static put(methodName, body) {
     return fetch(`/${this.urlSubName}/${methodName}`, {
@@ -35,14 +39,13 @@ export default class BaseService {
       })));
   }
 
-  static get(methodName, body) {
-    return fetch(`/${this.urlSubName}/${methodName}`, {
+  static get(methodName) {
+    return fetch(`${this.urlBaseName}/${methodName}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: undefined,
     }).then(response =>
       response.json().then(dataReceived => ({
         data: dataReceived,
