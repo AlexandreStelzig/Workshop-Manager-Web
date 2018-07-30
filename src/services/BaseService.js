@@ -25,7 +25,7 @@ export default class BaseService {
   }
 
   static put(methodName, body) {
-    return fetch(`/${this.urlSubName}/${methodName}`, {
+    return fetch(`${this.urlBaseName}/${methodName}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',

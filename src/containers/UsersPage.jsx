@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import UserService from '../services/UserService';
+import ValidationUtilities from '../utils/ValidationUtilities';
 
-const Languages = ['Français', 'English', 'Bilingual'];
-const userTypes = ['Instructor', 'Administrator', 'Super Administrator'];
-const licenseTypes = ['None', 'G', 'G2'];
-const statusTypes = ['Active', 'Inactive'];
+const languages = [{ value: 'FRA', text: 'Francais' }, { value: 'ENG', text: 'English' }, { value: 'BIL', text: 'Bilingual' }];
+const userTypes = [{ value: 'Instructor', text: 'Instructor' }, { value: 'Administrator', text: 'Administrator' }, { value: 'Super Administrator', text: 'Super Administrator' }];
+const licenseTypes = [{ value: null, text: 'None' }, { value: 'G', text: 'G' }, { value: 'G1', text: 'G1' }, { value: 'G2', text: 'G2' }];
 
 let users = [
 
@@ -20,99 +20,8 @@ function onAfterInsertRow(row) {
 }
 
 const options = {
-  afterInsertRow: onAfterInsertRow  // A hook for after insert rows
+  afterInsertRow: onAfterInsertRow, // A hook for after insert rows
 };
-
-function onAfterSaveCell(row, cellName, cellValue) {
-  UserService.updateUser(row).then((returnValue) => {
-    if (!returnValue) {
-      alert('Error while updating');
-    }
-  }).catch((error) => {
-    alert(error);
-  });
-}
-
-function onBeforeSaveCell(row, cellName, cellValue) {
-  // You can do any validation on here for editing value,
-  // return false for reject the editing
-  if (!cellValue) {
-    return false;
-  }
-
-  return true;
-}
-
-const cellEditProp = {
-  mode: 'click',
-  blurToSave: true,
-  beforeSaveCell: onBeforeSaveCell, // a hook for before saving cell
-  afterSaveCell: onAfterSaveCell, // a hook for after saving cell
-};
-
-function stringValidator(value) {
-  const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-  if (!value) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be inserted';
-    response.notification.title = 'Requested Value';
-  }
-
-  return response;
-}
-
-function emptyValidator(value) {
-  const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-  if (!value) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be inserted';
-    response.notification.title = 'Requested Value';
-  }
-
-  return response;
-}
-
-function emailValidator(value) {
-  const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  var emailIsValid = re.test(String(value).toLowerCase());
-
-  if (!value) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be inserted';
-    response.notification.title = 'Requested Value';
-  } else if (!emailIsValid) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be an email';
-    response.notification.title = 'Invalid Value';
-  }
-
-  return response;
-}
-
-function phoneValidator(value) {
-  const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-  var re = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-  var phoneIsValid = re.test(String(value).toLowerCase());
-
-  if (!value) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be inserted';
-    response.notification.title = 'Requested Value';
-  } else if (!phoneIsValid) {
-    response.isValid = false;
-    response.notification.type = 'error';
-    response.notification.msg = 'Value must be a phone number';
-    response.notification.title = 'Invalid Value';
-  }
-
-  return response;
-}
 
 export default class UsersPage extends Component {
   constructor(props) {
@@ -123,6 +32,33 @@ export default class UsersPage extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.filterUsers = this.filterUsers.bind(this);
     this.getAllUsers();
+
+    this.cellEditProp = {
+      mode: 'click',
+      blurToSave: true,
+      beforeSaveCell: this.onBeforeSaveCell, // a hook for before saving cell
+      afterSaveCell: this.onAfterSaveCell, // a hook for after saving cell
+    };
+  }
+
+  onAfterSaveCell(row, cellName, cellValue) {
+    UserService.updateUser(row).then((returnValue) => {
+      if (!returnValue) {
+        alert('Error while updating');
+      }
+    }).catch((error) => {
+      // alert(error);
+    });
+  }
+
+  onBeforeSaveCell(row, cellName, cellValue) {
+    // You can do any validation on here for editing value,
+    // return false for reject the editing
+    if (!cellValue) {
+      return false;
+    }
+
+    return true;
   }
 
   getAllUsers() {
@@ -134,13 +70,17 @@ export default class UsersPage extends Component {
     });
   }
 
+  enumFormatter(cell, row, enumObject) {
+    return enumObject[cell];
+  }
+
   filterUsers() {
     this.filteredUsers = [];
     for (let i = 0; i < users.length; i++) {
-      // const status = users[i].status.toLowerCase();
-      // if (this.state.showInactive || status === 'active') {
-      this.filteredUsers.push(users[i]);
-      // }
+      const isActive = users[i].isActive;
+      if (this.state.showInactive || isActive) {
+        this.filteredUsers.push(users[i]);
+      }
     }
 
     this.setState({ filteredUsers: this.filteredUsers });
@@ -155,8 +95,26 @@ export default class UsersPage extends Component {
     this.filterUsers();
   }
 
-
   render() {
+    const languagesFormat = {
+      FRA: 'Francais',
+      ENG: 'English',
+      BIL: 'Bilingual',
+    };
+
+    const licenseTypesFormat = {
+      null: 'None',
+      G: 'G',
+      G1: 'G1',
+      G2: 'G2',
+    };
+
+    const userTypesFormat = {
+      Instructor: 'Instructor',
+      Administrator: 'Administrator',
+      'Super Administrator': 'Super Administrator',
+    };
+
     return (
       <React.Fragment>
         <div>
@@ -176,22 +134,22 @@ export default class UsersPage extends Component {
           condensed
           pagination
           insertRow
-          cellEdit={cellEditProp}
+          cellEdit={this.cellEditProp}
           search
           options={options}
         >
           <TableHeaderColumn dataField="userId" isKey hidden hiddenOnInsert searchable={false} autoValue>Idb</TableHeaderColumn>
-          <TableHeaderColumn dataField="username" dataSort editable={{ validator: emptyValidator }}>User Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="password" dataSort hidden searchable={false} editable={{ validator: emptyValidator }}>Password</TableHeaderColumn>
-          <TableHeaderColumn dataField="firstName" dataSort editable={{ validator: stringValidator }}>Surname</TableHeaderColumn>
-          <TableHeaderColumn dataField="lastName" dataSort editable={{ validator: stringValidator }}>Given Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="email" dataSort editable={{ validator: emailValidator }}>Email</TableHeaderColumn>
-          <TableHeaderColumn dataField="telephone" dataSort editable={{ validator: phoneValidator }}>Telephone</TableHeaderColumn>
-          <TableHeaderColumn dataField="dateOfBirth" dataSort editable={{ validator: emptyValidator }}>Date of Birth</TableHeaderColumn>
-          <TableHeaderColumn dataField="userType" dataSort editable={{ type: 'select', options: { values: userTypes } }}>User Type</TableHeaderColumn>
-          <TableHeaderColumn dataField="language" dataSort editable={{ name: 'language', type: 'select', options: { values: Languages } }}>Language(s)</TableHeaderColumn>
-          <TableHeaderColumn dataField="driversLicense" dataSort editable={{ type: 'select', options: { values: licenseTypes } }}>Driver License</TableHeaderColumn>
-          <TableHeaderColumn dataField="status" dataSort editable={{ type: 'select', options: { values: statusTypes } }}>Status</TableHeaderColumn>
+          <TableHeaderColumn dataField="username" dataSort editable={{ validator: ValidationUtilities.emptyValidator }}>User Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="password" dataSort hidden searchable={false} editable={{ validator: ValidationUtilities.emptyValidator }}>Password</TableHeaderColumn>
+          <TableHeaderColumn dataField="firstName" dataSort editable={{ validator: ValidationUtilities.stringValidator }}>Surname</TableHeaderColumn>
+          <TableHeaderColumn dataField="lastName" dataSort editable={{ validator: ValidationUtilities.stringValidator }}>Given Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="email" dataSort editable={{ validator: ValidationUtilities.emailValidator }}>Email</TableHeaderColumn>
+          <TableHeaderColumn dataField="telephone" dataSort editable={{ validator: ValidationUtilities.phoneValidator }}>Telephone</TableHeaderColumn>
+          <TableHeaderColumn dataField="dateOfBirth" dataSort editable={{ validator: ValidationUtilities.emptyValidator }}>Date of Birth</TableHeaderColumn>
+          <TableHeaderColumn dataField="userType" dataSort dataFormat={this.enumFormatter} formatExtraData={userTypesFormat} editable={{ type: 'select', options: { values: userTypes, textKey: 'text', valueKey: 'value' } }}>User Type</TableHeaderColumn>
+          <TableHeaderColumn dataField="language" dataSort dataFormat={this.enumFormatter} formatExtraData={languagesFormat} editable={{ name: 'language', type: 'select', options: { values: languages, textKey: 'text', valueKey: 'value' } }}>Language(s)</TableHeaderColumn>
+          <TableHeaderColumn dataField="driversLicense" dataSort dataFormat={this.enumFormatter} formatExtraData={licenseTypesFormat} editable={{ type: 'select', options: { values: licenseTypes, textKey: 'text', valueKey: 'value' } }}>Driver License</TableHeaderColumn>
+          <TableHeaderColumn dataField="isActive" dataSort editable={{ type: 'checkbox' }}>Is Active</TableHeaderColumn>
         </BootstrapTable>
       </React.Fragment>
     );

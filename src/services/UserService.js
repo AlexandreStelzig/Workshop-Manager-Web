@@ -18,7 +18,7 @@ export default class UserService extends BaseService {
       language: user.language,
       driversLicense: user.driversLicense,
       password: user.password,
-      status: user.status,
+      isActive: user.isActive,
     }).then(res => res.data);
   }
 
@@ -35,7 +35,7 @@ export default class UserService extends BaseService {
       language: user.language,
       driversLicense: user.driversLicense,
       password: user.password,
-      status: user.status,
+      isActive: user.isActive,
     }).then(res => res.data);
   }
 }
