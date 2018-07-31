@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton, Button, Badge } from 'react-bootstrap';
+import { ToggleButtonGroup, ToggleButton, Badge } from 'react-bootstrap';
 import RegistrationService from '../services/RegistrationService';
 
 const statuses = [
@@ -59,6 +59,7 @@ export default class RegistrationsPage extends Component {
   changepage() {
     this.setState({ redirect: true });
   }
+
   render() {
     const selectRow = {
       mode: 'checkbox',
@@ -68,6 +69,7 @@ export default class RegistrationsPage extends Component {
         this.setState({ redirect: true });
       },
     };
+
     const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
@@ -116,7 +118,7 @@ export default class RegistrationsPage extends Component {
             <TableHeaderColumn dataField="registrationId" isKey hidden searchable={false}>Id</TableHeaderColumn>
             <TableHeaderColumn dataField="status" filterFormatted dataSort >Status</TableHeaderColumn>
             <TableHeaderColumn dataField="submissionDate" dataSort >Date Submitted</TableHeaderColumn>
-            <TableHeaderColumn dataField="schoolId" dataSort >School</TableHeaderColumn>
+            <TableHeaderColumn dataField="school" dataSort dataFormat={cell => ((cell !== null && cell.schoolName !== null) ? cell.schoolName : '')} >School</TableHeaderColumn>
             <TableHeaderColumn dataField="contactFullName" dataSort >Client</TableHeaderColumn>
             <TableHeaderColumn dataField="contactEmail" dataSort >Email</TableHeaderColumn>
             <TableHeaderColumn dataField="paid" hidden searchable={false}>Payed?</TableHeaderColumn>
