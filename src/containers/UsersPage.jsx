@@ -5,23 +5,11 @@ import ValidationUtilities from '../utils/ValidationUtilities';
 
 const languages = [{ value: 'FRA', text: 'Francais' }, { value: 'ENG', text: 'English' }, { value: 'BIL', text: 'Bilingual' }];
 const userTypes = [{ value: 'Instructor', text: 'Instructor' }, { value: 'Administrator', text: 'Administrator' }, { value: 'Super Administrator', text: 'Super Administrator' }];
-const licenseTypes = [{ value: null, text: 'None' }, { value: 'G', text: 'G' }, { value: 'G1', text: 'G1' }, { value: 'G2', text: 'G2' }];
+const licenseTypes = [{ value: 'None', text: 'None' }, { value: 'G', text: 'G' }, { value: 'G1', text: 'G1' }, { value: 'G2', text: 'G2' }];
 
 let users = [
 
 ];
-
-function onAfterInsertRow(row) {
-  UserService.createUser(row).then((returnValue) => {
-
-  }).catch((error) => {
-    // alert(error);
-  });
-}
-
-const options = {
-  afterInsertRow: onAfterInsertRow, // A hook for after insert rows
-};
 
 export default class UsersPage extends Component {
   constructor(props) {
@@ -39,6 +27,19 @@ export default class UsersPage extends Component {
       beforeSaveCell: this.onBeforeSaveCell, // a hook for before saving cell
       afterSaveCell: this.onAfterSaveCell, // a hook for after saving cell
     };
+
+    this.options = {
+      afterInsertRow: this.onAfterInsertRow, // A hook for after insert rows
+    };
+  }
+
+
+  onAfterInsertRow(row) {
+    UserService.createUser(row).then((returnValue) => {
+
+    }).catch((error) => {
+      // alert(error);
+    });
   }
 
   onAfterSaveCell(row, cellName, cellValue) {
@@ -103,7 +104,7 @@ export default class UsersPage extends Component {
     };
 
     const licenseTypesFormat = {
-      null: 'None',
+      None: 'None',
       G: 'G',
       G1: 'G1',
       G2: 'G2',
@@ -136,7 +137,7 @@ export default class UsersPage extends Component {
           insertRow
           cellEdit={this.cellEditProp}
           search
-          options={options}
+          options={this.options}
         >
           <TableHeaderColumn dataField="userId" isKey hidden hiddenOnInsert searchable={false} autoValue>Idb</TableHeaderColumn>
           <TableHeaderColumn dataField="username" dataSort editable={{ validator: ValidationUtilities.emptyValidator }}>User Name</TableHeaderColumn>
