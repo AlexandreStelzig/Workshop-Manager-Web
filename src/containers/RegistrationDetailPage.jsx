@@ -4,22 +4,6 @@ import styled from 'styled-components';
 import LabelEdit from '../components/editors/LabelEdit';
 import RegistrationService from '../services/RegistrationService';
 
-const registration = [
-  {
-    id: 0,
-    name: 'École secondaire Alpha-Romeo',
-    type: 'high school',
-    board: 'CSPC',
-    language: 'français',
-    adresse: '100 rue Brooks',
-    province: 'Québec',
-    city: 'Gatineau',
-    postal: 'J9Y2N1',
-    contactName: 'Marie-Lou Dufrene',
-    contactPhone: '819-456-4562',
-    contactEmail: 'marielou@email.ca',
-  },
-];
 const workshopsDetail = [
   {
     id: 0,
@@ -110,13 +94,15 @@ export default class RegistrationDetailPage extends Component {
   }
 
   componentDidMount() {
-    RegistrationService.getRegistration(11).then((reg) => {
+    RegistrationService.getRegistration(1).then((reg) => {
       this.setState({ registration: reg });
     });
   }
 
   textChange(e) {
-    this.setState({ registration: { ...this.state.registration, [e.target.name]: e.target.value } });
+    const registration = { ...this.state.registration, [e.target.name]: e.target.value };
+    RegistrationService.editRegistration(registration);
+    this.setState({ registration });
   }
 
   renderRow(label1, name1, label2, name2) {
