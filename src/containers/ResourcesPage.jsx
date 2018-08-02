@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { ButtonToolbar, Button } from 'react-bootstrap';
+import ResourceService from '../services/ResourceService';
 
 const initialCategories = ['Transportation', 'Bin'];
-const testResources = [
-  {
-    id: 0, name: 'Van1', category: 'Transportation', label: '', doubleBooking: 'Yes', notes: 'License plate: 2FAST',
-  },
-  {
-    id: 1, name: 'Bin 1', category: 'Bin', label: 'B1', doubleBooking: 'No', notes: 'For 3D printing',
-  },
-  {
-    id: 2, name: 'Bin 2', category: 'Bin', label: 'B2', doubleBooking: 'No', notes: 'For Electricity',
-  },
-];
 const cellEditProperties = {
   mode: 'click',
   blurToSave: true,
@@ -34,10 +24,40 @@ export default class ResourcesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      resources: [],
     };
+    async function getResources() {
+      return ResourceService.getResources();
+    }
+    getResources().then(data => this.setState({
+      resources: data,
+    }));
+    this.onAddRow = this.onAddRow.bind(this);
+  }
+
+  onAddRow(row) {
+    const resource = {
+      id: '',
+      name: row.name,
+      category: row.category,
+      label: row.label,
+      doubleBooking: row.doubleBooking,
+      notes: row.notes,
+    };
+    async function addResource() {
+      return ResourceService.addResource(resource);
+    }
+    addResource().then(data => this.setState({
+      dataId: data.id,
+    }));
+    resource.id = this.state.dataId;
+    this.state.resources.push(resource);
   }
 
   render() {
+    const options = {
+      onAddRow: this.onAddRow,
+    };
     return (
       <React.Fragment>
         <div>
@@ -45,7 +65,7 @@ export default class ResourcesPage extends Component {
         </div>
         <div>
           <BootstrapTable
-            data={testResources}
+            data={this.state.resources}
             hover
             striped
             condensed
@@ -56,12 +76,13 @@ export default class ResourcesPage extends Component {
             deleteRow
             cellEdit={cellEditProperties}
             searchPlaceholder="Filter resources..."
+            options={options}
           >
-            <TableHeaderColumn dataField="id" isKey hidden hiddenOnInsert searchable={false} autoValue>Id</TableHeaderColumn>
+            <TableHeaderColumn dataField="resource_id" isKey hidden hiddenOnInsert searchable={false} autoValue>Id</TableHeaderColumn>
             <TableHeaderColumn dataField="name" dataSort >Name</TableHeaderColumn>
             <TableHeaderColumn dataField="category" dataSort editable={{ type: 'select', options: { values: initialCategories } }} >Category</TableHeaderColumn>
             <TableHeaderColumn dataField="label" dataSort >Label</TableHeaderColumn>
-            <TableHeaderColumn dataField="doubleBooking" dataSort editable={{ type: 'checkbox', options: { values: 'Yes:No' } }}>Double booking</TableHeaderColumn>
+            <TableHeaderColumn dataField="double_booking" dataSort editable={{ type: 'checkbox', options: { values: 'Yes:No' } }}>Double booking</TableHeaderColumn>
             <TableHeaderColumn dataField="notes" dataSort >Notes</TableHeaderColumn>
             <TableHeaderColumn dataField="buttonToolbar" hiddenOnInsert editable={false} searchable={false} dataFormat={buttonToolbarFormatter} />
           </BootstrapTable>
