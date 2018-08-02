@@ -4,25 +4,6 @@ import { Redirect } from 'react-router-dom';
 import { ToggleButtonGroup, ToggleButton, Badge } from 'react-bootstrap';
 import RegistrationService from '../services/RegistrationService';
 
-const statuses = [
-  {
-    status: 'all', label: 'All Statuses', count: 11,
-  }, {
-    status: 'new', label: 'New', count: 3,
-  }, {
-    status: 'sent', label: 'Sent', count: 2,
-  }, {
-    status: 'conflict', label: 'Conflict', count: 1,
-  }, {
-    status: 'confirmed', label: 'Confirmed', count: 4,
-  }, {
-    status: 'cancelled', label: 'Cancelled', count: 2,
-  }, {
-    status: 'consent', label: 'Consent', count: 0,
-  }, {
-    status: 'unpayed', label: 'Unpayed', count: 3,
-  }];
-
 const progBar = {
   width: '25%',
 };
@@ -31,8 +12,26 @@ export default class RegistrationsPage extends Component {
   constructor() {
     super();
     this.state = {
-      filterStatus: 'all',
+      filterStatus: 'All',
       redirect: false,
+      statusCount: [
+        {
+          status: 'All', label: 'All Statuses', count: 0,
+        }, {
+          status: 'New', label: 'New', count: 0,
+        }, {
+          status: 'Sent', label: 'Sent', count: 0,
+        }, {
+          status: 'Conflict', label: 'Conflict', count: 0,
+        }, {
+          status: 'Confirmed', label: 'Confirmed', count: 0,
+        }, {
+          status: 'Cancelled', label: 'Cancelled', count: 0,
+        }, {
+          status: 'Consent', label: 'Consent', count: 0,
+        }, {
+          status: 'Unpayed', label: 'Unpayed', count: 0,
+        }],
     };
     this.onToggleChange = this.onToggleChange.bind(this);
   }
@@ -41,15 +40,22 @@ export default class RegistrationsPage extends Component {
     RegistrationService.getRegistrations().then((reg) => {
       this.setState({ registrations: reg });
     });
+    RegistrationService.getStatusCount().then((statuses) => {
+      const statusCopy = this.state.statusCount;
+      for (let i = 0; i < statusCopy.length; i++) {
+        statusCopy[i].count = statuses[statusCopy[i].status] === undefined ? 0 : statuses[statusCopy[i].status];
+      }
+      this.setState({ statusCount: statusCopy });
+    });
   }
 
   onToggleChange(e) {
-    if (e === 'all') {
-      this.setState({ filterStatus: 'all' });
+    if (e === 'All') {
+      this.setState({ filterStatus: 'All' });
       this.tableRef.handleFilterData({ status: '' });
-    } else if (e === 'unpayed') {
-      this.setState({ filterStatus: 'unpayed' });
-      this.tableRef.handleFilterData({ status: '', isPayed: false });
+    } else if (e === 'Unpayed') {
+      this.setState({ filterStatus: 'Unpayed' });
+      this.tableRef.handleFilterData({ status: '', paid: false });
     } else {
       this.setState({ filterStatus: e });
       this.tableRef.handleFilterData({ status: e });
@@ -70,7 +76,7 @@ export default class RegistrationsPage extends Component {
       },
     };
 
-    const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
+    const toggleItem = this.state.statusCount.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
     }
