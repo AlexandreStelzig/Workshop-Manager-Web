@@ -14,10 +14,10 @@ export default class RegistrationService extends BaseService {
   }
 
   static getRegistrations() {
-    return super.get('registration/').then(res => res.data);
+    return super.get('registrations/').then(res => res.data);
   }
 
   static getStatusCount() {
-    return super.get('registration/status-count').then(statusCount => statusCount.data);
+    return super.get('registrations/status-count').then(statusCount => statusCount.data);
   }
 }
