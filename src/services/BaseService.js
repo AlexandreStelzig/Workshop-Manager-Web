@@ -27,6 +27,7 @@ export default class BaseService {
   static put(methodName, body) {
     return fetch(`${this.urlBaseName}/${methodName}`, {
       method: 'PUT',
+      mode: 'cors',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

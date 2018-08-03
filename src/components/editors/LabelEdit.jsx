@@ -6,21 +6,15 @@ export default class LabelEdit extends Component {
     super(props);
     this.state = {
       editing: false,
-      text: props.value,
       type: props.type,
     };
     this.labelClicked = this.labelClicked.bind(this);
-    this.textChanged = this.textChanged.bind(this);
     this.inputLostFocus = this.inputLostFocus.bind(this);
     this.keyPressed = this.keyPressed.bind(this);
   }
 
   labelClicked() {
     this.setState({ editing: true });
-  }
-
-  textChanged() {
-    this.setState({ text: this.textInput.value });
   }
 
   inputLostFocus() {
@@ -43,11 +37,12 @@ export default class LabelEdit extends Component {
             ref={(r) => { this.textInput = r; }}
             type="text"
             className="form-control"
-            onChange={this.textChanged}
+            onChange={this.props.onValueChange}
             onBlur={this.inputLostFocus}
             onKeyPress={this.keyPressed}
-            value={this.state.text}
+            value={this.props.value}
             autoFocus
+            name={this.props.name}
           />);
           break;
         default: // for the text
@@ -55,18 +50,19 @@ export default class LabelEdit extends Component {
             ref={(r) => { this.textInput = r; }}
             type="text"
             className="form-control"
-            onChange={this.textChanged}
+            onChange={this.props.onValueChange}
             onBlur={this.inputLostFocus}
             onKeyPress={this.keyPressed}
-            value={this.state.text}
+            value={this.props.value}
             autoFocus
+            name={this.props.name}
           />);
           break;
       }
     } else {
       editingElement = (
         <div onClick={this.labelClicked}>
-          {this.state.text}
+          {this.props.value}
         </div>);
     }
     return editingElement;
@@ -76,10 +72,14 @@ export default class LabelEdit extends Component {
 LabelEdit.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
+  onValueChange: PropTypes.func,
+  name: PropTypes.string,
 };
 
 LabelEdit.defaultProps = {
   type: 'text',
   value: '',
+  onValueChange: () => {},
+  name: ''
 };
 

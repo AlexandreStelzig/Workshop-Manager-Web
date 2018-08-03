@@ -2,23 +2,8 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import styled from 'styled-components';
 import LabelEdit from '../components/editors/LabelEdit';
+import RegistrationService from '../services/RegistrationService';
 
-const registration = [
-  {
-    id: 0,
-    name: 'École secondaire Alpha-Romeo',
-    type: 'high school',
-    board: 'CSPC',
-    language: 'français',
-    adresse: '100 rue Brooks',
-    province: 'Québec',
-    city: 'Gatineau',
-    postal: 'J9Y2N1',
-    contactName: 'Marie-Lou Dufrene',
-    contactPhone: '819-456-4562',
-    contactEmail: 'marielou@email.ca',
-  },
-];
 const workshopsDetail = [
   {
     id: 0,
@@ -104,100 +89,76 @@ function quantityValidator(value) {
 export default class RegistrationDetailPage extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = { registration: {} };
+    this.textChange = this.textChange.bind(this);
   }
+
+  componentDidMount() {
+    RegistrationService.getRegistration(1).then((reg) => {
+      this.setState({ registration: reg });
+    });
+  }
+
+  textChange(e) {
+    const registration = { ...this.state.registration, [e.target.name]: e.target.value };
+    RegistrationService.editRegistration(registration);
+    this.setState({ registration });
+  }
+
+  renderRow(label1, name1, label2, name2) {
+    return (
+      <div className="row">
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label1}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={this.state.registration[name1]} type="text" name={name1} onValueChange={this.textChange} />
+        </div>
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label2}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={this.state.registration[name2]} type="text" name={name2} onValueChange={this.textChange} />
+        </div>
+      </div>
+    );
+  }
+
+  renderSchool() {
+    return (
+      <React.Fragment>
+        <h3>School Informations </h3>
+        <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
+        <section>
+          {this.renderRow('Name', 'name', 'Type', 'groupType')}
+          {this.renderRow('Board', 'board', 'Language', 'language')}
+          {this.renderRow('Adresse', 'adresse', 'Province', 'province')}
+          {this.renderRow('City', 'city', 'Postal', 'postal')}
+        </section>
+      </React.Fragment>
+    );
+  }
+
+  renderContact() {
+    return (
+      <React.Fragment>
+        <h3>Contact Informations</h3>
+        <section>
+          {this.renderRow('First Name', 'contactFirstName', 'Last Name', 'contactLastName')}
+          {this.renderRow('Phone', 'contactTelephone', 'Email', 'contactEmail')}
+        </section>
+      </React.Fragment>
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
         <div>
           <h1>Registration Detail</h1>
         </div>
-        <h3>School Informations </h3>
-        <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
-        <section>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Name: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].name} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Type: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].type} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Board: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].board} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Language: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].language} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].adresse} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Province: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].province} type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">City: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].city} />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Postal: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].postal} type="text" />
-            </div>
-          </div>
-        </section>
-        <h3>Contact Informations</h3>
-        <section>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Name: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].contactName} type="text" />
-            </div>
-            <div className="col-md-1" />
-          </div>
-          <div className="row">
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Phone: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].contactPhone} type="text" />
-            </div>
-            <div className="col-md-1">
-              <BoldDiv className="control-label float-right">Email: </BoldDiv>
-            </div>
-            <div className="col-md-3">
-              <LabelEdit value={registration[0].contactEmail} type="text" />
-            </div>
-          </div>
-        </section>
+        {this.renderSchool()}
+        {this.renderContact()}
         <h3>Status Informations</h3>
         <p>This information comes from another system</p>
         <h3>Workshops</h3>
@@ -233,9 +194,9 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              {registration[0].adresse}
-              {registration[0].province}
-              {registration[0].postal}
+              {this.state.registration.adresse}
+              {this.state.registration.province}
+              {this.state.registration.postal}
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Transport: </BoldDiv>
@@ -308,9 +269,9 @@ export default class RegistrationDetailPage extends Component {
               <BoldDiv className="control-label float-right">Adresse: </BoldDiv>
             </div>
             <div className="col-md-3">
-              {registration[0].adresse}
-              {registration[0].province}
-              {registration[0].postal}
+              {this.state.registration.adresse}
+              {this.state.registration.province}
+              {this.state.registration.postal}
             </div>
             <div className="col-md-1">
               <BoldDiv className="control-label float-right">Transport: </BoldDiv>
