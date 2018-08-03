@@ -7,93 +7,75 @@ const languages = [{ value: 'FRA', text: 'Francais' }, { value: 'ENG', text: 'En
 const userTypes = [{ value: 'Instructor', text: 'Instructor' }, { value: 'Administrator', text: 'Administrator' }, { value: 'Super Administrator', text: 'Super Administrator' }];
 const licenseTypes = [{ value: 'None', text: 'None' }, { value: 'G', text: 'G' }, { value: 'G1', text: 'G1' }, { value: 'G2', text: 'G2' }];
 
-let users = [
 
-];
+function onAfterInsertRow(row) {
+  UserService.createUser(row).catch((error) => {
+    alert(error);
+  });
+}
+
+function onAfterSaveCell(row, cellName, cellValue) {
+  UserService.updateUser(row).then((returnValue) => {
+    if (!returnValue) {
+      alert('Error while updating');
+    }
+  }).catch((error) => {
+     alert(error);
+  });
+}
+
+function onBeforeSaveCell(row, cellName, cellValue) {
+  // You can do any validation on here for editing value,
+  // return false for reject the editing
+  if (!cellValue) {
+    return false;
+  }
+
+  return true;
+}
+
+const cellEditProp = {
+  mode: 'click',
+  blurToSave: true,
+  beforeSaveCell: onBeforeSaveCell,
+  afterSaveCell: onAfterSaveCell,
+};
+
+
+const options = {
+  afterInsertRow: onAfterInsertRow,
+};
+
+function enumFormatter(cell, row, enumObject) {
+  return enumObject[cell];
+}
 
 export default class UsersPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filteredUsers: users,
+      filteredUsers: [],
+      showAll: true,
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.filterUsers = this.filterUsers.bind(this);
+    this.onToggleChange = this.onToggleChange.bind(this);
     this.getAllUsers();
-
-    this.cellEditProp = {
-      mode: 'click',
-      blurToSave: true,
-      beforeSaveCell: this.onBeforeSaveCell, // a hook for before saving cell
-      afterSaveCell: this.onAfterSaveCell, // a hook for after saving cell
-    };
-
-    this.options = {
-      afterInsertRow: this.onAfterInsertRow, // A hook for after insert rows
-    };
+    // this.tableRef.handleFilterData({ isActive: true });
   }
 
-
-  onAfterInsertRow(row) {
-    UserService.createUser(row).then((returnValue) => {
-
-    }).catch((error) => {
-      // alert(error);
-    });
-  }
-
-  onAfterSaveCell(row, cellName, cellValue) {
-    UserService.updateUser(row).then((returnValue) => {
-      if (!returnValue) {
-        alert('Error while updating');
-      }
-    }).catch((error) => {
-      // alert(error);
-    });
-  }
-
-  onBeforeSaveCell(row, cellName, cellValue) {
-    // You can do any validation on here for editing value,
-    // return false for reject the editing
-    if (!cellValue) {
-      return false;
+  onToggleChange(e) {
+    if (e.target.checked) {
+      this.tableRef.handleFilterData({ isActive: '' });
+    } else {
+      this.tableRef.handleFilterData({ isActive: true });
     }
-
-    return true;
   }
 
   getAllUsers() {
     UserService.getAllUsers().then((returnedUsers) => {
-      users = returnedUsers;
-      this.filterUsers();
+      this.setState({ filteredUsers: returnedUsers });
     }).catch((error) => {
-      // alert(error);
+      alert(error);
     });
-  }
-
-  enumFormatter(cell, row, enumObject) {
-    return enumObject[cell];
-  }
-
-  filterUsers() {
-    this.filteredUsers = [];
-    for (let i = 0; i < users.length; i++) {
-      const isActive = users[i].isActive;
-      if (this.state.showInactive || isActive) {
-        this.filteredUsers.push(users[i]);
-      }
-    }
-
-    this.setState({ filteredUsers: this.filteredUsers });
-  }
-
-  handleInputChange(event) {
-    const target = event.target;
-    if (target.type === 'checkbox') {
-      this.state.showInactive = target.checked;
-    }
-
-    this.filterUsers();
   }
 
   render() {
@@ -124,20 +106,21 @@ export default class UsersPage extends Component {
         <br />
         <div className="row">
           <div className="col-md-12">
-            <label><input type="checkbox" defaultChecked={this.state.showInactive} id="userShowInactiveCheckbox" onChange={this.handleInputChange} /> Show inactive users</label>
+            <label><input type="checkbox" defaultChecked={this.state.showAll} id="userShowInactiveCheckbox" onChange={this.onToggleChange} /> Show inactive users</label>
           </div>
         </div>
         <br />
         <BootstrapTable
-          data={this.filteredUsers}
+          data={this.state.filteredUsers}
           striped
+          ref={(tableRef) => { this.tableRef = tableRef; }}
           hover
           condensed
           pagination
           insertRow
-          cellEdit={this.cellEditProp}
+          cellEdit={cellEditProp}
           search
-          options={this.options}
+          options={options}
         >
           <TableHeaderColumn dataField="userId" isKey hidden hiddenOnInsert searchable={false} autoValue>Idb</TableHeaderColumn>
           <TableHeaderColumn dataField="username" dataSort editable={{ validator: ValidationUtilities.emptyValidator }}>User Name</TableHeaderColumn>
@@ -147,9 +130,9 @@ export default class UsersPage extends Component {
           <TableHeaderColumn dataField="email" dataSort editable={{ validator: ValidationUtilities.emailValidator }}>Email</TableHeaderColumn>
           <TableHeaderColumn dataField="telephone" dataSort editable={{ validator: ValidationUtilities.phoneValidator }}>Telephone</TableHeaderColumn>
           <TableHeaderColumn dataField="dateOfBirth" dataSort editable={{ validator: ValidationUtilities.emptyValidator }}>Date of Birth</TableHeaderColumn>
-          <TableHeaderColumn dataField="userType" dataSort dataFormat={this.enumFormatter} formatExtraData={userTypesFormat} editable={{ type: 'select', options: { values: userTypes, textKey: 'text', valueKey: 'value' } }}>User Type</TableHeaderColumn>
-          <TableHeaderColumn dataField="language" dataSort dataFormat={this.enumFormatter} formatExtraData={languagesFormat} editable={{ name: 'language', type: 'select', options: { values: languages, textKey: 'text', valueKey: 'value' } }}>Language(s)</TableHeaderColumn>
-          <TableHeaderColumn dataField="driversLicense" dataSort dataFormat={this.enumFormatter} formatExtraData={licenseTypesFormat} editable={{ type: 'select', options: { values: licenseTypes, textKey: 'text', valueKey: 'value' } }}>Driver License</TableHeaderColumn>
+          <TableHeaderColumn dataField="userType" dataSort dataFormat={enumFormatter} formatExtraData={userTypesFormat} editable={{ type: 'select', options: { values: userTypes, textKey: 'text', valueKey: 'value' } }}>User Type</TableHeaderColumn>
+          <TableHeaderColumn dataField="language" dataSort dataFormat={enumFormatter} formatExtraData={languagesFormat} editable={{ name: 'language', type: 'select', options: { values: languages, textKey: 'text', valueKey: 'value' } }}>Language(s)</TableHeaderColumn>
+          <TableHeaderColumn dataField="driversLicense" dataSort dataFormat={enumFormatter} formatExtraData={licenseTypesFormat} editable={{ type: 'select', options: { values: licenseTypes, textKey: 'text', valueKey: 'value' } }}>Driver License</TableHeaderColumn>
           <TableHeaderColumn dataField="isActive" dataSort editable={{ type: 'checkbox' }}>Is Active</TableHeaderColumn>
         </BootstrapTable>
       </React.Fragment>
