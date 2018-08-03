@@ -1,52 +1,8 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect } from 'react-router-dom';
-import { FormGroup, ControlLabel, FormControl, ToggleButtonGroup, ToggleButton, Button, Badge } from 'react-bootstrap';
-
-const registrations = [
-  {
-    id: 0, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'alexia@gmail.com', isPayed: true,
-  }, {
-    id: 1, status: 'sent', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'simon123@gmail.com', isPayed: true,
-  }, {
-    id: 2, status: 'sent', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Simon Pauletier', email: 'simon11@gmail.com', isPayed: true,
-  }, {
-    id: 3, status: 'confirmed', dateSubmitted: '03/01/2018', school: 'UOttawa', name: 'Aimy Salazar', email: 'aimy@gmail.com', isPayed: false,
-  }, {
-    id: 4, status: 'confirmed', dateSubmitted: '04/01/2018', school: 'Scouts', name: 'Johanne Doe', email: 'johanneDoe@gmail.com', isPayed: false,
-  }, {
-    id: 5, status: 'confirmed', dateSubmitted: '07/01/2018', school: 'Petit-Ruisseau', name: 'Paul Boris', email: 'paulBoris@gmail.com', isPayed: false,
-  }, {
-    id: 6, status: 'new', dateSubmitted: '18/01/2018', school: 'École élémentaire St-Jean De Bréboeuf', name: 'Amy Sandiago', email: 'amy@gmail.com', isPayed: true,
-  }, {
-    id: 7, status: 'new', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Diaz', email: 'al@gmail.com', isPayed: true,
-  }, {
-    id: 8, status: 'confirmed', dateSubmitted: '01/02/2018', school: 'St-Medard', name: 'Jake Travolta', email: 'travolta@gmail.com', isPayed: true,
-  }, {
-    id: 9, status: 'cancelled', dateSubmitted: '01/01/2018', school: 'St-Medard', name: 'Alexia Soprano', email: 'soprano@gmail.com', isPayed: false,
-  }, {
-    id: 10, status: 'conflict', dateSubmitted: '02/02/2018', school: 'St-Medard', name: 'Simon François', email: 'sFran@gmail.com', isPayed: true,
-  }, {
-    id: 11, status: 'cancelled', dateSubmitted: '01/02/2018', school: 'Grande-Rivière', name: 'Alex Rider', email: 'aRider@gmail.com', isPayed: true,
-  }];
-const statuses = [
-  {
-    status: 'all', label: 'All Statuses', count: 11,
-  }, {
-    status: 'new', label: 'New', count: 3,
-  }, {
-    status: 'sent', label: 'Sent', count: 2,
-  }, {
-    status: 'conflict', label: 'Conflict', count: 1,
-  }, {
-    status: 'confirmed', label: 'Confirmed', count: 4,
-  }, {
-    status: 'cancelled', label: 'Cancelled', count: 2,
-  }, {
-    status: 'consent', label: 'Consent', count: 0,
-  }, {
-    status: 'unpayed', label: 'Unpayed', count: 3,
-  }];
+import { ToggleButtonGroup, ToggleButton, Badge } from 'react-bootstrap';
+import RegistrationService from '../services/RegistrationService';
 
 const progBar = {
   width: '25%',
@@ -56,19 +12,50 @@ export default class RegistrationsPage extends Component {
   constructor() {
     super();
     this.state = {
-      filterStatus: 'all',
+      filterStatus: 'All',
       redirect: false,
+      statusCount: [
+        {
+          status: 'All', label: 'All Statuses', count: 0,
+        }, {
+          status: 'New', label: 'New', count: 0,
+        }, {
+          status: 'Sent', label: 'Sent', count: 0,
+        }, {
+          status: 'Conflict', label: 'Conflict', count: 0,
+        }, {
+          status: 'Confirmed', label: 'Confirmed', count: 0,
+        }, {
+          status: 'Cancelled', label: 'Cancelled', count: 0,
+        }, {
+          status: 'Consent', label: 'Consent', count: 0,
+        }, {
+          status: 'Unpayed', label: 'Unpayed', count: 0,
+        }],
     };
     this.onToggleChange = this.onToggleChange.bind(this);
   }
 
+  componentDidMount() {
+    RegistrationService.getRegistrations().then((reg) => {
+      this.setState({ registrations: reg });
+    });
+    RegistrationService.getStatusCount().then((statuses) => {
+      const statusCopy = this.state.statusCount;
+      for (let i = 0; i < statusCopy.length; i++) {
+        statusCopy[i].count = statuses[statusCopy[i].status] === undefined ? 0 : statuses[statusCopy[i].status];
+      }
+      this.setState({ statusCount: statusCopy });
+    });
+  }
+
   onToggleChange(e) {
-    if (e === 'all') {
-      this.setState({ filterStatus: 'all' });
+    if (e === 'All') {
+      this.setState({ filterStatus: 'All' });
       this.tableRef.handleFilterData({ status: '' });
-    } else if (e === 'unpayed') {
-      this.setState({ filterStatus: 'unpayed' });
-      this.tableRef.handleFilterData({ status: '', isPayed: false });
+    } else if (e === 'Unpayed') {
+      this.setState({ filterStatus: 'Unpayed' });
+      this.tableRef.handleFilterData({ status: '', paid: false });
     } else {
       this.setState({ filterStatus: e });
       this.tableRef.handleFilterData({ status: e });
@@ -78,6 +65,7 @@ export default class RegistrationsPage extends Component {
   changepage() {
     this.setState({ redirect: true });
   }
+
   render() {
     const selectRow = {
       mode: 'checkbox',
@@ -87,7 +75,8 @@ export default class RegistrationsPage extends Component {
         this.setState({ redirect: true });
       },
     };
-    const toggleItem = statuses.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
+
+    const toggleItem = this.state.statusCount.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
     if (this.state.redirect) {
       return <Redirect push to="/registrationDetail" />;
     }
@@ -123,7 +112,7 @@ export default class RegistrationsPage extends Component {
           <BootstrapTable
             inputRef="table"
             ref={(tableRef) => { this.tableRef = tableRef; }}
-            data={registrations}
+            data={this.state.registrations}
             hover
             striped
             condensed
@@ -132,13 +121,13 @@ export default class RegistrationsPage extends Component {
             searchPlaceholder="Filter registrations..."
             selectRow={selectRow}
           >
-            <TableHeaderColumn dataField="id" isKey hidden searchable={false}>Id</TableHeaderColumn>
+            <TableHeaderColumn dataField="registrationId" isKey hidden searchable={false}>Id</TableHeaderColumn>
             <TableHeaderColumn dataField="status" filterFormatted dataSort >Status</TableHeaderColumn>
-            <TableHeaderColumn dataField="dateSubmitted" dataSort >Date Submitted</TableHeaderColumn>
-            <TableHeaderColumn dataField="school" dataSort >School</TableHeaderColumn>
-            <TableHeaderColumn dataField="name" dataSort >Client</TableHeaderColumn>
-            <TableHeaderColumn dataField="email" dataSort >Email</TableHeaderColumn>
-            <TableHeaderColumn dataField="isPayed" hidden searchable={false}>Payed?</TableHeaderColumn>
+            <TableHeaderColumn dataField="submissionDate" dataSort >Date Submitted</TableHeaderColumn>
+            <TableHeaderColumn dataField="school" dataSort dataFormat={cell => ((cell !== null && cell.schoolName !== null) ? cell.schoolName : '')} >School</TableHeaderColumn>
+            <TableHeaderColumn dataField="contactFullName" dataSort >Client</TableHeaderColumn>
+            <TableHeaderColumn dataField="contactEmail" dataSort >Email</TableHeaderColumn>
+            <TableHeaderColumn dataField="paid" hidden searchable={false}>Payed?</TableHeaderColumn>
           </BootstrapTable>
         </div>
       </React.Fragment>
