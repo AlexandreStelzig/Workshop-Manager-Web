@@ -55,11 +55,14 @@ export default class UsersPage extends Component {
     super(props);
     this.state = {
       filteredUsers: [],
-      showAll: true,
+      showAll: false,
     };
     this.onToggleChange = this.onToggleChange.bind(this);
+  }
+
+  componentDidMount() {
     this.getAllUsers();
-    // this.tableRef.handleFilterData({ isActive: true });
+    this.tableRef.handleFilterData({ isActive: true });
   }
 
   onToggleChange(e) {
