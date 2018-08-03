@@ -109,7 +109,7 @@ export default class UsersPage extends Component {
         <br />
         <div className="row">
           <div className="col-md-12">
-            <label><input type="checkbox" defaultChecked={this.state.showAll} id="userShowInactiveCheckbox" onChange={this.onToggleChange} /> Show inactive users</label>
+            <label htmlFor="userShowInactiveCheckbox"><input type="checkbox" defaultChecked={this.state.showAll} id="userShowInactiveCheckbox" onChange={this.onToggleChange} /> Show inactive users</label>
           </div>
         </div>
         <br />
