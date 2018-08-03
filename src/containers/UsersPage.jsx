@@ -14,7 +14,7 @@ function onAfterInsertRow(row) {
   });
 }
 
-function onAfterSaveCell(row, cellName, cellValue) {
+function onAfterSaveCell(row) {
   UserService.updateUser(row).then((returnValue) => {
     if (!returnValue) {
       alert('Error while updating');
