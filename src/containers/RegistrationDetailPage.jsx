@@ -87,10 +87,30 @@ function quantityValidator(value) {
 }
 
 export default class RegistrationDetailPage extends Component {
+  static renderRow(label1, name1, value1, label2, name2, value2, handleChange) {
+    return (
+      <div className="row">
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label1}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={value1} type="text" name={name1} onValueChange={handleChange} />
+        </div>
+        <div className="col-md-2">
+          <BoldDiv className="control-label float-right">{label2}: </BoldDiv>
+        </div>
+        <div className="col-md-3">
+          <LabelEdit value={value2} type="text" name={name2} onValueChange={handleChange} />
+        </div>
+      </div>
+    );
+  }
+
   constructor() {
     super();
-    this.state = { registration: {} };
-    this.textChange = this.textChange.bind(this);
+    this.state = { registration: { school: {} } };
+    this.textContactChange = this.textContactChange.bind(this);
+    this.textSchoolChange = this.textSchoolChange.bind(this);
   }
 
   componentDidMount() {
@@ -99,29 +119,29 @@ export default class RegistrationDetailPage extends Component {
     });
   }
 
-  textChange(e) {
+  textContactChange(e) {
     const registration = { ...this.state.registration, [e.target.name]: e.target.value };
     RegistrationService.editRegistration(registration);
     this.setState({ registration });
   }
 
-  renderRow(label1, name1, label2, name2) {
-    return (
-      <div className="row">
-        <div className="col-md-2">
-          <BoldDiv className="control-label float-right">{label1}: </BoldDiv>
-        </div>
-        <div className="col-md-3">
-          <LabelEdit value={this.state.registration[name1]} type="text" name={name1} onValueChange={this.textChange} />
-        </div>
-        <div className="col-md-2">
-          <BoldDiv className="control-label float-right">{label2}: </BoldDiv>
-        </div>
-        <div className="col-md-3">
-          <LabelEdit value={this.state.registration[name2]} type="text" name={name2} onValueChange={this.textChange} />
-        </div>
-      </div>
-    );
+  textSchoolChange(e) {
+    const school = { ...this.state.registration.school, [e.target.name]: e.target.value };
+    const registration = { ...this.state.registration, school };
+    RegistrationService.editRegistration(registration);
+    this.setState({ registration });
+  }
+
+  renderSchoolRow(label1, name1, label2, name2) {
+    const value1 = this.state.registration.school[name1];
+    const value2 = this.state.registration.school[name2];
+    return RegistrationDetailPage.renderRow(label1, name1, value1, label2, name2, value2, this.textSchoolChange);
+  }
+
+  renderContactRow(label1, name1, label2, name2) {
+    const value1 = this.state.registration[name1];
+    const value2 = this.state.registration[name2];
+    return RegistrationDetailPage.renderRow(label1, name1, value1, label2, name2, value2, this.textContactChange);
   }
 
   renderSchool() {
@@ -130,10 +150,10 @@ export default class RegistrationDetailPage extends Component {
         <h3>School Informations </h3>
         <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
         <section>
-          {this.renderRow('Name', 'name', 'Type', 'groupType')}
-          {this.renderRow('Board', 'board', 'Language', 'language')}
-          {this.renderRow('Adresse', 'adresse', 'Province', 'province')}
-          {this.renderRow('City', 'city', 'Postal', 'postal')}
+          {this.renderSchoolRow('Name', 'schoolName', 'Type', 'schoolType')}
+          {this.renderSchoolRow('Board', 'schoolBoard', 'Language', 'language')}
+          {this.renderSchoolRow('Address', 'address', 'Province', 'province')}
+          {this.renderSchoolRow('City', 'city', 'Postal', 'postalCode')}
         </section>
       </React.Fragment>
     );
@@ -144,8 +164,8 @@ export default class RegistrationDetailPage extends Component {
       <React.Fragment>
         <h3>Contact Informations</h3>
         <section>
-          {this.renderRow('First Name', 'contactFirstName', 'Last Name', 'contactLastName')}
-          {this.renderRow('Phone', 'contactTelephone', 'Email', 'contactEmail')}
+          {this.renderContactRow('First Name', 'contactFirstName', 'Last Name', 'contactLastName')}
+          {this.renderContactRow('Phone', 'contactTelephone', 'Email', 'contactEmail')}
         </section>
       </React.Fragment>
     );
