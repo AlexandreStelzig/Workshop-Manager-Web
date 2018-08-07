@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import styled from 'styled-components';
 import LabelEdit from '../components/editors/LabelEdit';
+import SimpleDropdown from '../components/editors/SimpleDropdown';
 import RegistrationService from '../services/RegistrationService';
 
 const workshopsDetail = [
@@ -87,20 +88,22 @@ function quantityValidator(value) {
 }
 
 export default class RegistrationDetailPage extends Component {
-  static renderRow(label1, name1, value1, label2, name2, value2, handleChange) {
+  static renderRow(label1, comp1, label2, comp2) {
     return (
       <div className="row">
         <div className="col-md-2">
           <BoldDiv className="control-label float-right">{label1}: </BoldDiv>
         </div>
         <div className="col-md-3">
-          <LabelEdit value={value1} type="text" name={name1} onValueChange={handleChange} />
+          {comp1}
+          {/* <LabelEdit value={value1} type="text" name={name1} onValueChange={handleChange} /> */}
         </div>
         <div className="col-md-2">
           <BoldDiv className="control-label float-right">{label2}: </BoldDiv>
         </div>
         <div className="col-md-3">
-          <LabelEdit value={value2} type="text" name={name2} onValueChange={handleChange} />
+          {comp2}
+          {/* <LabelEdit value={value2} type="text" name={name2} onValueChange={handleChange} /> */}
         </div>
       </div>
     );
@@ -145,15 +148,50 @@ export default class RegistrationDetailPage extends Component {
   }
 
   renderSchool() {
+    const types = [{
+      id: 'Elementary',
+      name: 'Elementary',
+    }, {
+      id: 'High School',
+      name: 'High School',
+    }, {
+      id: 'CEGEP',
+      name: 'CEGEP',
+    }];
+
+    const languages = [{
+      id: 'ENG',
+      name: 'English',
+    }, {
+      id: 'FRA',
+      name: 'French',
+    }, {
+      id: 'BIL',
+      name: 'Bilingual',
+    }];
+
+
     return (
       <React.Fragment>
         <h3>School Informations </h3>
         <button type="button" className="btn btn-primary" style={{ float: 'right' }}>Invoice</button>
         <section>
-          {this.renderSchoolRow('Name', 'schoolName', 'Type', 'schoolType')}
-          {this.renderSchoolRow('Board', 'schoolBoard', 'Language', 'language')}
-          {this.renderSchoolRow('Address', 'address', 'Province', 'province')}
-          {this.renderSchoolRow('City', 'city', 'Postal', 'postalCode')}
+          {RegistrationDetailPage.renderRow(
+            'Name', <LabelEdit value={this.state.registration.school.schoolName} type="text" name="schoolName" onValueChange={this.textSchoolChange} />,
+            'Type', <SimpleDropdown value={this.state.registration.school.schoolType} items={types} name="schoolType" onValueChange={this.textSchoolChange} />,
+            )}
+          {RegistrationDetailPage.renderRow(
+            'Board', <LabelEdit value={this.state.registration.school.schoolBoard} type="text" name="schoolBoard" onValueChange={this.textSchoolChange} />,
+            'Language', <SimpleDropdown value={this.state.registration.school.language} items={languages} name="language" onValueChange={this.textSchoolChange} />,
+            )}
+          {RegistrationDetailPage.renderRow(
+            'Address', <LabelEdit value={this.state.registration.school.address} type="text" name="address" onValueChange={this.textSchoolChange} />,
+            'Province', <LabelEdit value={this.state.registration.school.province} type="text" name="province" onValueChange={this.textSchoolChange} />,
+            )}
+          {RegistrationDetailPage.renderRow(
+            'City', <LabelEdit value={this.state.registration.school.city} type="text" name="city" onValueChange={this.textSchoolChange} />,
+            'Postal', <LabelEdit value={this.state.registration.school.postalCode} type="text" name="postalCode" onValueChange={this.textSchoolChange} />,
+            )}
         </section>
       </React.Fragment>
     );
@@ -164,8 +202,14 @@ export default class RegistrationDetailPage extends Component {
       <React.Fragment>
         <h3>Contact Informations</h3>
         <section>
-          {this.renderContactRow('First Name', 'contactFirstName', 'Last Name', 'contactLastName')}
-          {this.renderContactRow('Phone', 'contactTelephone', 'Email', 'contactEmail')}
+          {RegistrationDetailPage.renderRow(
+            'First Name', <LabelEdit value={this.state.registration.contactFirstName} type="text" name="contactFirstName" onValueChange={this.textContactChange} />,
+            'Last Name', <LabelEdit value={this.state.registration.contactLastName} type="text" name="contactLastName" onValueChange={this.textContactChange} />,
+            )}
+          {RegistrationDetailPage.renderRow(
+            'Phone', <LabelEdit value={this.state.registration.contactTelephone} type="text" name="contactTelephone" onValueChange={this.textContactChange} />,
+            'Email', <LabelEdit value={this.state.registration.contactEmail} type="text" name="contactEmail" onValueChange={this.textContactChange} />,
+            )}
         </section>
       </React.Fragment>
     );
