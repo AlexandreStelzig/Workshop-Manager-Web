@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { Redirect } from 'react-router-dom';
 import { ToggleButtonGroup, ToggleButton, Badge } from 'react-bootstrap';
 import RegistrationService from '../services/RegistrationService';
+import History from '../utils/History';
 
 const progBar = {
   width: '25%',
@@ -13,7 +13,6 @@ export default class RegistrationsPage extends Component {
     super();
     this.state = {
       filterStatus: 'All',
-      redirect: false,
       statusCount: [
         {
           status: 'All', label: 'All Statuses', count: 0,
@@ -30,7 +29,7 @@ export default class RegistrationsPage extends Component {
         }, {
           status: 'Consent', label: 'Consent', count: 0,
         }, {
-          status: 'Unpayed', label: 'Unpayed', count: 0,
+          status: 'Unpaid', label: 'Unpaid', count: 0,
         }],
     };
     this.onToggleChange = this.onToggleChange.bind(this);
@@ -53,33 +52,25 @@ export default class RegistrationsPage extends Component {
     if (e === 'All') {
       this.setState({ filterStatus: 'All' });
       this.tableRef.handleFilterData({ status: '' });
-    } else if (e === 'Unpayed') {
-      this.setState({ filterStatus: 'Unpayed' });
+    } else if (e === 'Unpaid') {
+      this.setState({ filterStatus: 'Unpaid' });
       this.tableRef.handleFilterData({ status: '', paid: false });
     } else {
       this.setState({ filterStatus: e });
       this.tableRef.handleFilterData({ status: e });
     }
   }
-
-  changepage() {
-    this.setState({ redirect: true });
-  }
-
   render() {
     const selectRow = {
       mode: 'checkbox',
       clickToSelect: true,
       hideSelectColumn: true,
-      onSelect: () => {
-        this.setState({ redirect: true });
+      onSelect: (row) => {
+        History.push(`/registrationDetail/${row.registrationId}`);
       },
     };
 
     const toggleItem = this.state.statusCount.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
-    if (this.state.redirect) {
-      return <Redirect push to="/registrationDetail" />;
-    }
     return (
       <React.Fragment>
         <div>
