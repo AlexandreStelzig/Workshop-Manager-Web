@@ -30,7 +30,7 @@ export default class RegistrationsPage extends Component {
         }, {
           status: 'Consent', label: 'Consent', count: 0,
         }, {
-          status: 'Unpayed', label: 'Unpayed', count: 0,
+          status: 'Unpaid', label: 'Unpaid', count: 0,
         }],
     };
     this.onToggleChange = this.onToggleChange.bind(this);
@@ -53,8 +53,8 @@ export default class RegistrationsPage extends Component {
     if (e === 'All') {
       this.setState({ filterStatus: 'All' });
       this.tableRef.handleFilterData({ status: '' });
-    } else if (e === 'Unpayed') {
-      this.setState({ filterStatus: 'Unpayed' });
+    } else if (e === 'Unpaid') {
+      this.setState({ filterStatus: 'Unpaid' });
       this.tableRef.handleFilterData({ status: '', paid: false });
     } else {
       this.setState({ filterStatus: e });
