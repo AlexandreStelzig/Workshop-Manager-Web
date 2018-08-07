@@ -68,7 +68,7 @@ export default class App extends Component {
               <PrivateRoute exact path="/" component={RegistrationsPage} />
               <Route exact path="/login" render={() => <LoginPage onLogin={this.onLogin} />} />
               <PrivateRoute exact path="/registrations" component={RegistrationsPage} />
-              <PrivateRoute exact path="/registrationDetail" component={RegistrationDetailPage} />
+              <PrivateRoute exact path="/registrationDetail/:id" component={RegistrationDetailPage} />
               <PrivateRoute exact path="/calendar" component={CalendarPage} />
               <PrivateRoute exact path="/resources" component={ResourcesPage} />
               <PrivateRoute exact path="/workshops" component={WorkshopsPage} />
