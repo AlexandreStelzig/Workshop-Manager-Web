@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { Redirect } from 'react-router-dom';
 import { ToggleButtonGroup, ToggleButton, Badge } from 'react-bootstrap';
 import RegistrationService from '../services/RegistrationService';
+import History from '../utils/History';
 
 const progBar = {
   width: '25%',
@@ -13,7 +13,6 @@ export default class RegistrationsPage extends Component {
     super();
     this.state = {
       filterStatus: 'All',
-      redirect: false,
       statusCount: [
         {
           status: 'All', label: 'All Statuses', count: 0,
@@ -61,25 +60,17 @@ export default class RegistrationsPage extends Component {
       this.tableRef.handleFilterData({ status: e });
     }
   }
-
-  changepage() {
-    this.setState({ redirect: true });
-  }
-
   render() {
     const selectRow = {
       mode: 'checkbox',
       clickToSelect: true,
       hideSelectColumn: true,
-      onSelect: () => {
-        this.setState({ redirect: true });
+      onSelect: (row) => {
+        History.push(`/registrationDetail/${row.registrationId}`);
       },
     };
 
     const toggleItem = this.state.statusCount.map(a => <ToggleButton key={a.status} value={a.status}>{a.label} <Badge>{a.count}</Badge></ToggleButton>);
-    if (this.state.redirect) {
-      return <Redirect push to="/registrationDetail" />;
-    }
     return (
       <React.Fragment>
         <div>

@@ -94,7 +94,7 @@ export default class RegistrationDetailPage extends Component {
   }
 
   componentDidMount() {
-    RegistrationService.getRegistration(1).then((reg) => {
+    RegistrationService.getRegistration(this.props.match.params.id).then((reg) => {
       this.setState({ registration: reg });
     });
   }
