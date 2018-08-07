@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import SimpleDropdown from './SimpleDropdown';
 
 export default class LabelEdit extends Component {
   constructor(props) {
@@ -41,6 +42,17 @@ export default class LabelEdit extends Component {
             onBlur={this.inputLostFocus}
             onKeyPress={this.keyPressed}
             value={this.props.value}
+            autoFocus
+            name={this.props.name}
+          />);
+          break;
+        case 'enum':
+          editingElement = (<SimpleDropdown
+            ref={(r) => { this.textInput = r; }}
+            onChange={this.props.onValueChange}
+            onBlur={this.inputLostFocus}
+            onKeyPress={this.keyPressed}
+            items={this.props.value}
             autoFocus
             name={this.props.name}
           />);
